@@ -33,7 +33,7 @@ A PR cannot be closed without a review.
 
 ## Roster and Team Roles
 
-* Martin Perry - Scrum Master/Prodcust Owner
+* Martin Perry - Scrum Master/Product Owner
 * Sourav Debnath - Dev
 * Kristin Hegna - Dev
 * Chris Taylor - Dev
