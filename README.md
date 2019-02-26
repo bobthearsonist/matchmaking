@@ -1,6 +1,6 @@
 ## Product Vision
 
-Enhance online gamelplay and retore community feel to gaming via the creation of matchmaking teams of selectable size from a known list of players with attributes based on game skill, playing style, and social behavior.
+Enhance online gameplay and restore community feel to gaming via the creation of matchmaking teams of selectable size from a known list of players with attributes based on game skill, playing style, and social behavior.
 
 ### Stakeholders
 
