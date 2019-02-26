@@ -39,5 +39,7 @@ A PR cannot be closed without a review.
 * Chris Taylor - Dev
 
 ## Links
+
 Trello board for deliverable tasks: https://trello.com/b/8qBFmwue/matchmaking-task-board
+
 Trello board for product backlog: https://trello.com/b/SxTVJTQK/matchmaking-product-backlog
