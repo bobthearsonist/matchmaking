@@ -13,7 +13,7 @@ Players looking for an enhanced, communal gaming experience.
 * Description expressed as a user story in "poem" form e.g. "As a ____, I want a ____, so that ____"
 * Decription may also contain clarifying details like "store this in s3" or "use the following endpoint to get the data"
 * Card represents identifiable single deliverable item of work
-* Story points estimated in "level of effort" using the "fibonacci" method using the set [0.5,1,2,3,5]
+* Story points estimated in "level of effort" using the "fibonacci" method using the set [0.5,1,2,3,5]. Story points go in the first line of the card.
 
 ## Backlog Rules
 
