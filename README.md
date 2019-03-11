@@ -13,7 +13,7 @@ Players looking for an enhanced, communal gaming experience.
 * Description expressed as a user story in "poem" form e.g. "As a ____, I want a ____, so that ____"
 * Decription may also contain clarifying details like "store this in s3" or "use the following endpoint to get the data"
 * Card represents identifiable single deliverable item of work
-* Story points estimated in "level of effort" using the "fibonacci" method using the set [0.5,1,2,3,5]. Story points go in the first line of the card.
+* Card is pointed
 
 ## Backlog Rules
 
@@ -24,6 +24,14 @@ A card is done when it has moved through every swimlane in the board INLCUDING R
 When a member is done with their card they will take the next card at the top of the backlog. No exceptions unless discussed and agreed buy the team.
 
 No member shall have more than one card at any one time. This results in a max number of "in flight" cards of 4.
+
+### Pointing/Estimating/Tracking
+
+Story points are estimated in "level of effort" using the "fibonacci" method using the set [0.5,1,2,3,5]. 
+
+Cards are pointed in person during the planning meeting using a "poker" approach with each individual ranking the card at the same time.
+
+Story points go in parenthesis as the first item  in the subject line of the card. Time spent goes in aquare brackets as the last item in the subject line of the card
 
 ## Merges and reviews
 
