@@ -1,0 +1,42 @@
+﻿@model PlayerMatcher.Rating
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Rating</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User_Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Game.Game_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.Game_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.User_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.User_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.User_Rating_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

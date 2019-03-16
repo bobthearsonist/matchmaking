@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PlayerMatcherEntites.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Game">
+    <Key>
+      <PropertyRef Name="Game_ID" />
+    </Key>
+    <Property Name="Game_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Game_Name" Type="varchar" MaxLength="100" />
+    <Property Name="Max_Player_Count" Type="int" />
+  </EntityType>
+  <EntityType Name="Game_Sessions">
+    <Key>
+      <PropertyRef Name="Game_Session_ID" />
+    </Key>
+    <Property Name="Game_Session_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Session_Start" Type="datetime" />
+    <Property Name="Session_End" Type="datetime" />
+    <Property Name="Game_ID" Type="int" />
+    <Property Name="User_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="User_Rating_ID" />
+    </Key>
+    <Property Name="User_Rating_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_Rating" Type="int" />
+    <Property Name="User_ID" Type="int" />
+    <Property Name="Game_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="User_ID" />
+    </Key>
+    <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_Name" Type="varchar" MaxLength="30" />
+    <Property Name="User_Password" Type="varchar" MaxLength="30" />
+    <Property Name="Is_Online" Type="bit" />
+  </EntityType>
+  <Association Name="FK__Game_Sess__Game___34C8D9D1">
+    <End Role="Game" Type="Self.Game" Multiplicity="0..1" />
+    <End Role="Game_Sessions" Type="Self.Game_Sessions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="Game_ID" />
+      </Principal>
+      <Dependent Role="Game_Sessions">
+        <PropertyRef Name="Game_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Game_Sess__User___33D4B598">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Game_Sessions" Type="Self.Game_Sessions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="User_ID" />
+      </Principal>
+      <Dependent Role="Game_Sessions">
+        <PropertyRef Name="User_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rating__Game_ID__30F848ED">
+    <End Role="Game" Type="Self.Game" Multiplicity="0..1" />
+    <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="Game_ID" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="Game_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rating__User_ID__300424B4">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="User_ID" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="User_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PlayerMatcherEntitesStoreContainer">
+    <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Game_Sessions" EntityType="Self.Game_Sessions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Game_Sess__Game___34C8D9D1" Association="Self.FK__Game_Sess__Game___34C8D9D1">
+      <End Role="Game" EntitySet="Game" />
+      <End Role="Game_Sessions" EntitySet="Game_Sessions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Game_Sess__User___33D4B598" Association="Self.FK__Game_Sess__User___33D4B598">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Game_Sessions" EntitySet="Game_Sessions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rating__Game_ID__30F848ED" Association="Self.FK__Rating__Game_ID__30F848ED">
+      <End Role="Game" EntitySet="Game" />
+      <End Role="Rating" EntitySet="Rating" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rating__User_ID__300424B4" Association="Self.FK__Rating__User_ID__300424B4">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Rating" EntitySet="Rating" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

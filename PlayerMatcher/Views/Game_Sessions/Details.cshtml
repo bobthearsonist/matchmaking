@@ -1,0 +1,50 @@
+﻿@model PlayerMatcher.Game_Sessions
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Game_Sessions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Session_Start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Session_Start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session_End)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Session_End)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Game.Game_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.Game_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.User_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.User_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Game_Session_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
