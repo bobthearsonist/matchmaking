@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerMatcher", "PlayerMatcher\PlayerMatcher.csproj", "{D9B31E8A-31AA-414B-B44A-DE473F38C68C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerMatcher.Tests", "PlayerMatcher.Tests\PlayerMatcher.Tests.csproj", "{E88437FF-7E61-4E47-B45E-63618F0A786C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9B31E8A-31AA-414B-B44A-DE473F38C68C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9B31E8A-31AA-414B-B44A-DE473F38C68C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9B31E8A-31AA-414B-B44A-DE473F38C68C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9B31E8A-31AA-414B-B44A-DE473F38C68C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E88437FF-7E61-4E47-B45E-63618F0A786C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E88437FF-7E61-4E47-B45E-63618F0A786C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E88437FF-7E61-4E47-B45E-63618F0A786C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E88437FF-7E61-4E47-B45E-63618F0A786C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A13B04B5-BA42-438D-86D3-4019B6612AC5}
+	EndGlobalSection
+EndGlobal
