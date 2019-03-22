@@ -1,6 +1,6 @@
 ## Product Vision
 
-Enhance online gamelplay and retore community feel to gaming via the creation of matchmaking teams of selectable size from a known list of players with attributes based on game skill, playing style, and social behavior.
+Enhance online gameplay and restore community feel to gaming via the creation of matchmaking teams of selectable size from a known list of players with attributes based on game skill, playing style, and social behavior.
 
 ### Stakeholders
 
@@ -9,9 +9,9 @@ Players looking for an enhanced, communal gaming experience.
 
 ## Definition of Ready
 
-* Clear, succinct title decribes deliverable item
+* Clear, succinct title describes deliverable item
 * Description expressed as a user story in "poem" form e.g. "As a ____, I want a ____, so that ____"
-* Decription may also contain clarifying details like "store this in s3" or "use the following endpoint to get the data"
+* Description may also contain clarifying details like "store this in s3" or "use the following endpoint to get the data"
 * Card represents identifiable single deliverable item of work
 * Card is pointed
 
@@ -19,7 +19,7 @@ Players looking for an enhanced, communal gaming experience.
 
 The backlog is ranked by order to complete. The cards at the top of the backlog or sprint will be worked prior to the cards below them.
 
-A card is done when it has moved through every swimlane in the board INLCUDING REVIEW.
+A card is done when it has moved through every swimlane in the board INCLUDING REVIEW.
 
 When a member is done with their card they will take the next card at the top of the backlog. No exceptions unless discussed and agreed buy the team.
 
@@ -45,6 +45,14 @@ A PR cannot be closed without a review.
 * Sourav Debnath - Dev
 * Kristin Hegna - Dev
 * Chris Taylor - Scrum Master
+
+## Backlog Order Rationale
+
+The player definition was chosen as the keystone of the project given all other services center around it. A store for these objects will back all services so it was chosen second.
+
+The services were chosen next in an order that was ranked by necessity, you need players for groups, and then by difficulty. This let us build an MVP and add features incrementally.
+
+The algorithm was added last, while it is the core of the deliverable product it is also the most difficult, and doing a less featured implementation of it gets us to software that works faster, iterations could then improve it.
 
 ## Links
 
