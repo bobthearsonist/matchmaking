@@ -57,4 +57,4 @@ The algorithm was added last, while it is the core of the deliverable product it
 ## Links
 Trello board for product backlog: https://trello.com/b/SxTVJTQK/matchmaking-product-backlog
 
-[Burndown charts and other sprint information](documentation/)
+[Burndown charts and other sprint information are in the documentation folder and are ordered by sprint](documentation/)
