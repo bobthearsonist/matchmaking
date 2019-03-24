@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Configuration;
-namespace PlayerMatcher.Models
+namespace PlayerMatcherService.Models
 {
     public partial class GamePlayerMatcherContext : DbContext
     {

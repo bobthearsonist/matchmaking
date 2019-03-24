@@ -12,9 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using PlayerMatcher.Models;
+using PlayerMatcherService.Models;
 
-namespace PlayerMatcher
+namespace PlayerMatcherService
 {
     public class Startup
     {

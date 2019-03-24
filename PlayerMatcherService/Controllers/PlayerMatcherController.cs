@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PlayerMatcher.Models;
+using PlayerMatcherService.Models;
 
-namespace PlayerMatcher.Controllers
+namespace PlayerMatcherService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

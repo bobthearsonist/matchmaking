@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PlayerMatcher.Models
+namespace PlayerMatcherService.Models
 {
     public partial class Game
     {
