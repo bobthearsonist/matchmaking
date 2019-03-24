@@ -55,7 +55,6 @@ The services were chosen next in an order that was ranked by necessity, you need
 The algorithm was added last, while it is the core of the deliverable product it is also the most difficult, and doing a less featured implementation of it gets us to software that works faster, iterations could then improve it.
 
 ## Links
-
-Trello board for deliverable tasks: https://trello.com/b/8qBFmwue/matchmaking-task-board
-
 Trello board for product backlog: https://trello.com/b/SxTVJTQK/matchmaking-product-backlog
+
+[Burndown charts and other sprint information](documentation/)
