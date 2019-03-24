@@ -19,9 +19,9 @@ namespace PlayerMatcher.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
         {
-            return new string[] { "value1", "value2" };
+            return await _context.Users.ToListAsync();
         }
     }
 }
