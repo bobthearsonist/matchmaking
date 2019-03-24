@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
+using System.Configuration;
 namespace PlayerMatcher.Models
 {
     public partial class GamePlayerMatcherContext : DbContext
@@ -22,11 +22,8 @@ namespace PlayerMatcher.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost,1433;Database=GamePlayerMatcher;User=sa;Password=f8DL9JkFx$1qrN4");
-            }
+            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["BloggingDatabase"].ConnectionString);
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

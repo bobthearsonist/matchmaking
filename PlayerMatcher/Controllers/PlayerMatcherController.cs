@@ -16,12 +16,6 @@ namespace PlayerMatcher.Controllers
         public UserController(GamePlayerMatcherContext context)
         {
             _context = context;
-
-            if (_context.Users.Count() == 0)
-            {
-                _context.Users.Add(new Users { UserName = "Item1" });
-                _context.SaveChanges();
-            }
         }
 
         [HttpGet]
