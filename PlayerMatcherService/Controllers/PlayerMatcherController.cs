@@ -26,7 +26,7 @@ namespace PlayerMatcherService.Controllers
 
     // GET: api/user/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<Users>> GetUser(long id)
+        public async Task<ActionResult<Users>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
 

@@ -29,8 +29,9 @@ dotnet build
 dotnet run
 ```
 
-to test the service you can use curl to list the users in the database. additional services will be added and documented with swagger.
+to test the service you can use curl to list the users in the database or give a specific userid as a param. additional services will be added and documented with swagger.
 
 ```
-curl -i https://localhost:5001/api/user
+curl -i -k https://localhost:5001/api/user
+curl -i -k https://localhost:5001/api/user/1
 ```
