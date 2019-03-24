@@ -23,5 +23,19 @@ namespace PlayerMatcher.Controllers
         {
             return await _context.Users.ToListAsync();
         }
+
+    // GET: api/user/1
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Users>> GetUser(long id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
     }
 }
