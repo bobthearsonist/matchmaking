@@ -153,6 +153,7 @@
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\Game_SessionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Game.cs">
@@ -301,7 +302,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57078</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56858/</IISUrl>
+          <IISUrl>http://localhost:29522/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:29522</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
