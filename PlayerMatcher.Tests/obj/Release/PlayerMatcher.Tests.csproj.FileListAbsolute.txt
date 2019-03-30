@@ -1,0 +1,2 @@
+C:\Users\CTaylor\Documents\Graduate School\Emerging Processes\Project\PlayerMatcher.Tests\obj\Release\PlayerMatcher.Tests.csprojAssemblyReference.cache
+C:\Users\CTaylor\Documents\Graduate School\Emerging Processes\Project\PlayerMatcher.Tests\obj\Release\PlayerMatcher.Tests.csproj.CoreCompileInputs.cache
