@@ -38,9 +38,9 @@ namespace PlayerMatcher.Controllers
             List<User> userList = db.Users.ToList();
             List<User> newList = new List<User>();
             int n = 0;
-            while (n < id.Value && n < userList.Count -1)
+            while (n < id && n < userList.Count -1)
             {
-                newList[n] = userList[n];
+                newList.Add(userList[n]);
                 n++;
             }
             JavaScriptResult jsRes = new JavaScriptResult();
