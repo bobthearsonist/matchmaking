@@ -45,22 +45,18 @@ namespace PlayerMatcher.Controllers
 
         // Incomplete
         // GET: Match/RandomMatch/5
-        public ActionResult RandomMatch(int? numPlayers)
+        public ActionResult RandomMatch(int? id)
         {
-            if (numPlayers == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            List < User > userList = db.Users.ToList();
-            List<User> matchPlayers = new List<User>();
-            int n = 0;
-            while (n < numPlayers)
-            {
-                matchPlayers[n] = userList[rng.Next(userList[0].User_ID, userList.Count+userList[0].User_ID)];
-                n++;
-            }
-
-            return View(matchPlayers);
+            List<User> userList = db.Users.OrderBy(o => Guid.NewGuid()).Take(id.Value).ToList();
+            JavaScriptResult jsRes = new JavaScriptResult();
+            var jsonS = new JavaScriptSerializer();
+            var jsonList = jsonS.Serialize(userList);
+            jsRes.Script = jsonList;
+            return jsRes;
         }
     }
 
