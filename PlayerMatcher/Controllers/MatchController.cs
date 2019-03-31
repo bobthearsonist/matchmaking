@@ -29,16 +29,16 @@ namespace PlayerMatcher.Controllers
 
         // Incomplete
         // GET: Match/SubsetPlayers
-        public ActionResult SubsetPlayers(int? numPlayers)
+        public ActionResult SubsetPlayers(int? id)
         {
-            if (numPlayers == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             List<User> userList = db.Users.ToList();
             List<User> newList = new List<User>();
             int n = 0;
-            while (n < numPlayers.Value && n < userList.Count -1)
+            while (n < id.Value && n < userList.Count -1)
             {
                 newList[n] = userList[n];
                 n++;
