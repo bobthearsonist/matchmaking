@@ -35,17 +35,10 @@ namespace PlayerMatcher.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            List<User> userList = db.Users.ToList();
-            List<User> newList = new List<User>();
-            int n = 0;
-            while (n < id && n < userList.Count -1)
-            {
-                newList.Add(userList[n]);
-                n++;
-            }
+            List<User> userList = db.Users.Take(id.Value).ToList();
             JavaScriptResult jsRes = new JavaScriptResult();
             var jsonS = new JavaScriptSerializer();
-            var jsonList = jsonS.Serialize(newList);
+            var jsonList = jsonS.Serialize(userList);
             jsRes.Script = jsonList;
             return jsRes;
         }
