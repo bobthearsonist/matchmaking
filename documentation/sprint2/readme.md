@@ -33,16 +33,16 @@ shifted focus from service api to a web front-end
 
 ### 20190329
 
-Chris, Souarev, Martin
+Chris, Sourav, Martin
 
 Martin expressed his contributions have been limited by the inability to use the project in an osx environment due to design decisions made by the team. he emphasized stating previously he was unable to develop in windows at the start of the project. he will continue to contribute with producing burndown charts and tracking the board as well as working to buddy code with other team members.
 
-Saurav was able to get the app running locally. Suggested that we meet with professor and show him the current application to set expectations.
+Sourav was able to get the app running locally. Suggested that we meet with professor and show him the current application to set expectations.
 
 Chris added a match endpoint and pushed it to the repository
 
 ### 20190331
-Martin, chris, souarev, kristin
+Martin, chris, sourav, kristin
 
 further match endpoint work
 
