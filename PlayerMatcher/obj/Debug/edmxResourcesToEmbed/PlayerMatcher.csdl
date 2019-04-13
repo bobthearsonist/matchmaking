@@ -1,52 +1,95 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="PlayerMatcherEntites" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="PlayerMatcherEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Games" EntityType="PlayerMatcherEntites.Game" />
+    <EntitySet Name="Game_Sessions" EntityType="PlayerMatcherEntites.Game_Sessions" />
+    <EntitySet Name="Ratings" EntityType="PlayerMatcherEntites.Rating" />
+    <EntitySet Name="Session_Users" EntityType="PlayerMatcherEntites.Session_Users" />
+    <EntitySet Name="Users" EntityType="PlayerMatcherEntites.User" />
+    <AssociationSet Name="FK__Game_Sess__Game___34C8D9D1" Association="PlayerMatcherEntites.FK__Game_Sess__Game___34C8D9D1">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="Game_Sessions" EntitySet="Game_Sessions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rating__Game_ID__30F848ED" Association="PlayerMatcherEntites.FK__Rating__Game_ID__30F848ED">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="Rating" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Game_Sess__User___33D4B598" Association="PlayerMatcherEntites.FK__Game_Sess__User___33D4B598">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Game_Sessions" EntitySet="Game_Sessions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Session_U__Game___4CA06362" Association="PlayerMatcherEntites.FK__Session_U__Game___4CA06362">
+      <End Role="Game_Sessions" EntitySet="Game_Sessions" />
+      <End Role="Session_Users" EntitySet="Session_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rating__User_ID__300424B4" Association="PlayerMatcherEntites.FK__Rating__User_ID__300424B4">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Rating" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Session_U__Users__4D94879B" Association="PlayerMatcherEntites.FK__Session_U__Users__4D94879B">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Session_Users" EntitySet="Session_Users" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="Game">
     <Key>
       <PropertyRef Name="Game_ID" />
     </Key>
-    <Property Name="Game_ID" Type="Int32" Nullable="false" />
+    <Property Name="Game_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Game_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Max_Player_Count" Type="Int32" />
-    <NavigationProperty Name="Game_Sessions" Relationship="Self.FK__Game_Sess__Game___34C8D9D1" FromRole="Game" ToRole="Game_Sessions" />
-    <NavigationProperty Name="Ratings" Relationship="Self.FK__Rating__Game_ID__30F848ED" FromRole="Game" ToRole="Rating" />
+    <NavigationProperty Name="Game_Sessions" Relationship="PlayerMatcherEntites.FK__Game_Sess__Game___34C8D9D1" FromRole="Game" ToRole="Game_Sessions" />
+    <NavigationProperty Name="Ratings" Relationship="PlayerMatcherEntites.FK__Rating__Game_ID__30F848ED" FromRole="Game" ToRole="Rating" />
   </EntityType>
   <EntityType Name="Game_Sessions">
     <Key>
       <PropertyRef Name="Game_Session_ID" />
     </Key>
-    <Property Name="Game_Session_ID" Type="Int32" Nullable="false" />
+    <Property Name="Game_Session_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Session_Start" Type="DateTime" Precision="3" />
     <Property Name="Session_End" Type="DateTime" Precision="3" />
     <Property Name="Game_ID" Type="Int32" />
     <Property Name="User_ID" Type="Int32" />
-    <NavigationProperty Name="Game" Relationship="Self.FK__Game_Sess__Game___34C8D9D1" FromRole="Game_Sessions" ToRole="Game" />
-    <NavigationProperty Name="User" Relationship="Self.FK__Game_Sess__User___33D4B598" FromRole="Game_Sessions" ToRole="Users" />
+    <NavigationProperty Name="Game" Relationship="PlayerMatcherEntites.FK__Game_Sess__Game___34C8D9D1" FromRole="Game_Sessions" ToRole="Game" />
+    <NavigationProperty Name="User" Relationship="PlayerMatcherEntites.FK__Game_Sess__User___33D4B598" FromRole="Game_Sessions" ToRole="User" />
+    <NavigationProperty Name="Session_Users" Relationship="PlayerMatcherEntites.FK__Session_U__Game___4CA06362" FromRole="Game_Sessions" ToRole="Session_Users" />
   </EntityType>
   <EntityType Name="Rating">
     <Key>
       <PropertyRef Name="User_Rating_ID" />
     </Key>
-    <Property Name="User_Rating_ID" Type="Int32" Nullable="false" />
+    <Property Name="User_Rating_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="User_Rating" Type="Int32" />
     <Property Name="User_ID" Type="Int32" />
     <Property Name="Game_ID" Type="Int32" />
-    <NavigationProperty Name="Game" Relationship="Self.FK__Rating__Game_ID__30F848ED" FromRole="Rating" ToRole="Game" />
-    <NavigationProperty Name="User" Relationship="Self.FK__Rating__User_ID__300424B4" FromRole="Rating" ToRole="Users" />
+    <NavigationProperty Name="Game" Relationship="PlayerMatcherEntites.FK__Rating__Game_ID__30F848ED" FromRole="Rating" ToRole="Game" />
+    <NavigationProperty Name="User" Relationship="PlayerMatcherEntites.FK__Rating__User_ID__300424B4" FromRole="Rating" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Session_Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Game_Session_ID" Type="Int32" Nullable="false" />
+    <Property Name="Users_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Game_Sessions" Relationship="PlayerMatcherEntites.FK__Session_U__Game___4CA06362" FromRole="Session_Users" ToRole="Game_Sessions" />
+    <NavigationProperty Name="User" Relationship="PlayerMatcherEntites.FK__Session_U__Users__4D94879B" FromRole="Session_Users" ToRole="User" />
   </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="User_ID" />
     </Key>
-    <Property Name="User_ID" Type="Int32" Nullable="false" />
+    <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="User_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="User_Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="Is_Online" Type="Boolean" />
-    <NavigationProperty Name="Game_Sessions" Relationship="Self.FK__Game_Sess__User___33D4B598" FromRole="Users" ToRole="Game_Sessions" />
-    <NavigationProperty Name="Ratings" Relationship="Self.FK__Rating__User_ID__300424B4" FromRole="Users" ToRole="Rating" />
+    <NavigationProperty Name="Game_Sessions" Relationship="PlayerMatcherEntites.FK__Game_Sess__User___33D4B598" FromRole="User" ToRole="Game_Sessions" />
+    <NavigationProperty Name="Ratings" Relationship="PlayerMatcherEntites.FK__Rating__User_ID__300424B4" FromRole="User" ToRole="Rating" />
+    <NavigationProperty Name="Session_Users" Relationship="PlayerMatcherEntites.FK__Session_U__Users__4D94879B" FromRole="User" ToRole="Session_Users" />
   </EntityType>
   <Association Name="FK__Game_Sess__Game___34C8D9D1">
-    <End Role="Game" Type="Self.Game" Multiplicity="0..1" />
-    <End Role="Game_Sessions" Type="Self.Game_Sessions" Multiplicity="*" />
+    <End Type="PlayerMatcherEntites.Game" Role="Game" Multiplicity="0..1" />
+    <End Type="PlayerMatcherEntites.Game_Sessions" Role="Game_Sessions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Game">
         <PropertyRef Name="Game_ID" />
@@ -57,8 +100,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Rating__Game_ID__30F848ED">
-    <End Role="Game" Type="Self.Game" Multiplicity="0..1" />
-    <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+    <End Type="PlayerMatcherEntites.Game" Role="Game" Multiplicity="0..1" />
+    <End Type="PlayerMatcherEntites.Rating" Role="Rating" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Game">
         <PropertyRef Name="Game_ID" />
@@ -69,10 +112,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Game_Sess__User___33D4B598">
-    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
-    <End Role="Game_Sessions" Type="Self.Game_Sessions" Multiplicity="*" />
+    <End Type="PlayerMatcherEntites.User" Role="User" Multiplicity="0..1" />
+    <End Type="PlayerMatcherEntites.Game_Sessions" Role="Game_Sessions" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Users">
+      <Principal Role="User">
         <PropertyRef Name="User_ID" />
       </Principal>
       <Dependent Role="Game_Sessions">
@@ -80,11 +123,23 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Rating__User_ID__300424B4">
-    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
-    <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+  <Association Name="FK__Session_U__Game___4CA06362">
+    <End Type="PlayerMatcherEntites.Game_Sessions" Role="Game_Sessions" Multiplicity="1" />
+    <End Type="PlayerMatcherEntites.Session_Users" Role="Session_Users" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Users">
+      <Principal Role="Game_Sessions">
+        <PropertyRef Name="Game_Session_ID" />
+      </Principal>
+      <Dependent Role="Session_Users">
+        <PropertyRef Name="Game_Session_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rating__User_ID__300424B4">
+    <End Type="PlayerMatcherEntites.User" Role="User" Multiplicity="0..1" />
+    <End Type="PlayerMatcherEntites.Rating" Role="Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
         <PropertyRef Name="User_ID" />
       </Principal>
       <Dependent Role="Rating">
@@ -92,26 +147,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="PlayerMatcherEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Games" EntityType="Self.Game" />
-    <EntitySet Name="Game_Sessions" EntityType="Self.Game_Sessions" />
-    <EntitySet Name="Ratings" EntityType="Self.Rating" />
-    <EntitySet Name="Users" EntityType="Self.User" />
-    <AssociationSet Name="FK__Game_Sess__Game___34C8D9D1" Association="Self.FK__Game_Sess__Game___34C8D9D1">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Game_Sessions" EntitySet="Game_Sessions" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Rating__Game_ID__30F848ED" Association="Self.FK__Rating__Game_ID__30F848ED">
-      <End Role="Game" EntitySet="Games" />
-      <End Role="Rating" EntitySet="Ratings" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Game_Sess__User___33D4B598" Association="Self.FK__Game_Sess__User___33D4B598">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="Game_Sessions" EntitySet="Game_Sessions" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Rating__User_ID__300424B4" Association="Self.FK__Rating__User_ID__300424B4">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="Rating" EntitySet="Ratings" />
-    </AssociationSet>
-  </EntityContainer>
+  <Association Name="FK__Session_U__Users__4D94879B">
+    <End Type="PlayerMatcherEntites.User" Role="User" Multiplicity="1" />
+    <End Type="PlayerMatcherEntites.Session_Users" Role="Session_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_ID" />
+      </Principal>
+      <Dependent Role="Session_Users">
+        <PropertyRef Name="Users_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

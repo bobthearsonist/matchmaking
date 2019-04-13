@@ -183,6 +183,9 @@
     <Compile Include="Rating.cs">
       <DependentUpon>PlayerMatcher.tt</DependentUpon>
     </Compile>
+    <Compile Include="Session_Users.cs">
+      <DependentUpon>PlayerMatcher.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>PlayerMatcher.tt</DependentUpon>
     </Compile>
@@ -217,6 +220,7 @@
     <Content Include="PlayerMatcher.edmx.diagram">
       <DependentUpon>PlayerMatcher.edmx</DependentUpon>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -27,6 +27,14 @@
     <Property Name="User_ID" Type="int" />
     <Property Name="Game_ID" Type="int" />
   </EntityType>
+  <EntityType Name="Session_Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Game_Session_ID" Type="int" Nullable="false" />
+    <Property Name="Users_ID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="User_ID" />
@@ -84,10 +92,35 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Session_U__Game___4CA06362">
+    <End Role="Game_Sessions" Type="Self.Game_Sessions" Multiplicity="1" />
+    <End Role="Session_Users" Type="Self.Session_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game_Sessions">
+        <PropertyRef Name="Game_Session_ID" />
+      </Principal>
+      <Dependent Role="Session_Users">
+        <PropertyRef Name="Game_Session_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Session_U__Users__4D94879B">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Session_Users" Type="Self.Session_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="User_ID" />
+      </Principal>
+      <Dependent Role="Session_Users">
+        <PropertyRef Name="Users_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="PlayerMatcherEntitesStoreContainer">
     <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Game_Sessions" EntityType="Self.Game_Sessions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Session_Users" EntityType="Self.Session_Users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__Game_Sess__Game___34C8D9D1" Association="Self.FK__Game_Sess__Game___34C8D9D1">
       <End Role="Game" EntitySet="Game" />
@@ -104,6 +137,14 @@
     <AssociationSet Name="FK__Rating__User_ID__300424B4" Association="Self.FK__Rating__User_ID__300424B4">
       <End Role="Users" EntitySet="Users" />
       <End Role="Rating" EntitySet="Rating" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Session_U__Game___4CA06362" Association="Self.FK__Session_U__Game___4CA06362">
+      <End Role="Game_Sessions" EntitySet="Game_Sessions" />
+      <End Role="Session_Users" EntitySet="Session_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Session_U__Users__4D94879B" Association="Self.FK__Session_U__Users__4D94879B">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Session_Users" EntitySet="Session_Users" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

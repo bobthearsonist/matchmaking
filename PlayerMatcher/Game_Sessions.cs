@@ -14,13 +14,17 @@ namespace PlayerMatcher
     
     public partial class Game_Sessions
     {
+        public Game_Sessions()
+        {
+            this.Session_Users = new HashSet<Session_Users>();
+        }
+    
         public int Game_Session_ID { get; set; }
         public Nullable<System.DateTime> Session_Start { get; set; }
         public Nullable<System.DateTime> Session_End { get; set; }
         public Nullable<int> Game_ID { get; set; }
-        public Nullable<int> User_ID { get; set; }
     
         public virtual Game Game { get; set; }
-        public virtual User User { get; set; }
+        public virtual ICollection<Session_Users> Session_Users { get; set; }
     }
 }

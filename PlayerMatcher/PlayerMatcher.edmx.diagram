@@ -4,15 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3eb4cdd0ccc04987af2968896bfba029" Name="Diagram1">
-        <EntityTypeShape EntityType="PlayerMatcherEntites.Game" Width="1.5" PointX="4.75" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlayerMatcherEntites.Game_Sessions" Width="1.5" PointX="2" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlayerMatcherEntites.Rating" Width="1.5" PointX="4.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlayerMatcherEntites.User" Width="1.5" PointX="2" PointY="3.875" IsExpanded="true" />
-        <AssociationConnector Association="PlayerMatcherEntites.FK__Game_Sess__Game___34C8D9D1" ManuallyRouted="false" />
-        <AssociationConnector Association="PlayerMatcherEntites.FK__Rating__Game_ID__30F848ED" ManuallyRouted="false" />
-        <AssociationConnector Association="PlayerMatcherEntites.FK__Game_Sess__User___33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="PlayerMatcherEntites.FK__Rating__User_ID__300424B4" ManuallyRouted="false" />
+      <Diagram DiagramId="3eb4cdd0ccc04987af2968896bfba029" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="PlayerMatcherEntites.Game" Width="1.5" PointX="10" PointY="5.375" />
+        <EntityTypeShape EntityType="PlayerMatcherEntites.Game_Sessions" Width="1.5" PointX="7" PointY="2.75" />
+        <EntityTypeShape EntityType="PlayerMatcherEntites.Rating" Width="1.5" PointX="15.5" PointY="6.5" />
+        <EntityTypeShape EntityType="PlayerMatcherEntites.Session_Users" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PlayerMatcherEntites.User" Width="1.5" PointX="15.5" PointY="3.25" />
+        <AssociationConnector Association="PlayerMatcherEntites.FK__Game_Sess__Game___34C8D9D1" />
+        <AssociationConnector Association="PlayerMatcherEntites.FK__Rating__Game_ID__30F848ED" />
+        <AssociationConnector Association="PlayerMatcherEntites.FK__Session_U__Game___4CA06362" />
+        <AssociationConnector Association="PlayerMatcherEntites.FK__Rating__User_ID__300424B4" />
+        <AssociationConnector Association="PlayerMatcherEntites.FK__Session_U__Users__4D94879B" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
