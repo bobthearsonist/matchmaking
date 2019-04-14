@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using PlayerMatcher;
 
 namespace PlayerMatcher.Controllers
 {
     public class UsersController : Controller
     {
-        private PlayerMatcherEntities db = new PlayerMatcherEntities();
+        private PlayerMatcherEntities db;
+
+        public UsersController() : this(new PlayerMatcherEntities()) {}
+
+        public UsersController(PlayerMatcherEntities db)
+        {
+            this.@db = @db;
+        }
 
         // GET: Users
         public ActionResult Index()

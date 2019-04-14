@@ -1,11 +1,10 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Moq;
-
-using PlayerMatcherService.Models;
-using PlayerMatcherService.Controllers;
-
+using PlayerMatcher.Controllers;
+using PlayerMatcher;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Tests
 {
@@ -23,34 +22,39 @@ namespace Tests
         }
 
         [Test]
-        public async Task Index_AnItemList_WithAListOfAllUsers()
+        public void Index_AnItemList_WithAListOfAllUsers()
         {
             // Arrange
-            var mockRepo = new Mock<GamePlayerMatcherContext>();
-            mockRepo.Setup(repo => repo.ToListAsync())
-                .ReturnsAsync(GetTestUsers());
-            var controller = new UserController(mockRepo.Object);
+            var mockdb = new Mock<PlayerMatcherEntities>();
+            mockdb.SetupGet(repo => repo)
+            var mockUsers = new Mock<User>();
+//            mockUsers.As<IEnumerable<User>>();
+//            mockUsers.Setup(user => user.ToList()).Returns(GetTestUsers().ToList());
+            mockdb.Setup(repo => repo.Users.ToList())
+                .Returns(GetTestUsers().ToList());
+            var controller = new UsersController(mockdb.Object);
 
             // Act
-            var result = await controller.Index();
+            var result = (ViewResult)controller.Index();
 
             // Assert
-            var users = Assert.IsType<IEnumerable<Users>>(result);
-            Assert.Equal(2, users.Count());
+            Assert.IsInstanceOf<User>(result);
+            var users = (List<User>)result.Model;
+            Assert.Equals(2, users.Count());
         }
 
-        private IEnumerable<Users> GetTestUsers()
+        private IEnumerable<User> GetTestUsers()
         {
-            var users = new List<Users>();
-            users.Add(new Users()
+            var users = new List<User>();
+            users.Add(new User()
             {
-                UserId = 1,
-                UserName = "Test One"
+                User_ID = 1,
+                User_Name = "Test One"
             });
-            users.Add(new Users()
+            users.Add(new User()
             {
-                UserId = 2,
-                UserName = "Test Two"
+                User_ID = 2,
+                User_Name = "Test Two"
             });
             return users;
         }
