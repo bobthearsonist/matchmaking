@@ -52,7 +52,7 @@ namespace PlayerMatcher.Controllers
             {
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
 
             return View(user);
