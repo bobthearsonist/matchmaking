@@ -1,0 +1,27 @@
+﻿@model IEnumerable<PlayerMatcher.User>
+@{
+    ViewBag.Title = "Match";
+}
+
+<h2>GetMatch</h2>
+
+<p>
+    @Html.ActionLink("Get new match", "Match")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Name)
+        </th>        
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User_Name)
+            </td>
+        </tr>
+    }
+
+</table>
