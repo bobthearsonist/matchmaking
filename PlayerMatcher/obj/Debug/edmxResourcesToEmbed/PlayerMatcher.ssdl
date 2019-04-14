@@ -16,7 +16,6 @@
     <Property Name="Session_Start" Type="datetime" />
     <Property Name="Session_End" Type="datetime" />
     <Property Name="Game_ID" Type="int" />
-    <Property Name="User_ID" Type="int" />
   </EntityType>
   <EntityType Name="Rating">
     <Key>
@@ -31,7 +30,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Game_Session_ID" Type="int" Nullable="false" />
     <Property Name="Users_ID" Type="int" Nullable="false" />
   </EntityType>
@@ -53,18 +52,6 @@
       </Principal>
       <Dependent Role="Game_Sessions">
         <PropertyRef Name="Game_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Game_Sess__User___33D4B598">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-    <End Role="Game_Sessions" Type="Self.Game_Sessions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="User_ID" />
-      </Principal>
-      <Dependent Role="Game_Sessions">
-        <PropertyRef Name="User_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -124,10 +111,6 @@
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__Game_Sess__Game___34C8D9D1" Association="Self.FK__Game_Sess__Game___34C8D9D1">
       <End Role="Game" EntitySet="Game" />
-      <End Role="Game_Sessions" EntitySet="Game_Sessions" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Game_Sess__User___33D4B598" Association="Self.FK__Game_Sess__User___33D4B598">
-      <End Role="Users" EntitySet="Users" />
       <End Role="Game_Sessions" EntitySet="Game_Sessions" />
     </AssociationSet>
     <AssociationSet Name="FK__Rating__Game_ID__30F848ED" Association="Self.FK__Rating__Game_ID__30F848ED">

@@ -13,7 +13,6 @@
     <EntitySetMapping Name="Game_Sessions">
       <EntityTypeMapping TypeName="PlayerMatcherEntites.Game_Sessions">
         <MappingFragment StoreEntitySet="Game_Sessions">
-          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
           <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
           <ScalarProperty Name="Session_End" ColumnName="Session_End" />
           <ScalarProperty Name="Session_Start" ColumnName="Session_Start" />

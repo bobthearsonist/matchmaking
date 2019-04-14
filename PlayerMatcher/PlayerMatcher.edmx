@@ -35,7 +35,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Game_Session_ID" Type="int" Nullable="false" />
           <Property Name="Users_ID" Type="int" Nullable="false" />
         </EntityType>
@@ -202,7 +202,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Game_Session_ID" Type="Int32" Nullable="false" />
           <Property Name="Users_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Game_Sessions" Relationship="PlayerMatcherEntites.FK__Session_U__Game___4CA06362" FromRole="Session_Users" ToRole="Game_Sessions" />

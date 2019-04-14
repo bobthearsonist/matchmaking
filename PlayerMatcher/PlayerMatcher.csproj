@@ -154,6 +154,7 @@
     <Compile Include="Controllers\Game_SessionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
+    <Compile Include="Controllers\SessionUsersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Game.cs">
       <DependentUpon>PlayerMatcher.tt</DependentUpon>
@@ -266,6 +267,11 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\SessionUsers\Create.cshtml" />
+    <Content Include="Views\SessionUsers\Delete.cshtml" />
+    <Content Include="Views\SessionUsers\Details.cshtml" />
+    <Content Include="Views\SessionUsers\Edit.cshtml" />
+    <Content Include="Views\SessionUsers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

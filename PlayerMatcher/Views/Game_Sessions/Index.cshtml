@@ -18,10 +18,10 @@
             @Html.DisplayNameFor(model => model.Session_End)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Game.Game_Name)
+            Game
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.User_Name)
+            Users
         </th>
         <th></th>
     </tr>
@@ -38,7 +38,13 @@
             @Html.DisplayFor(modelItem => item.Game.Game_Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.User.User_Name)
+@foreach (var user in item.Session_Users.ToList())
+{
+    @Html.DisplayFor(modelItem => user.User.User_Name)  
+    @:</br>
+}
+
+            
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Game_Session_ID }) |
