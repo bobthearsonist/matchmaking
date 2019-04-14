@@ -7,13 +7,22 @@ namespace PlayerMatcher.Controllers
 {
     public class UsersController : Controller
     {
-        private PlayerMatcherEntities db;
+        public class PlayerMatcherEntitiesExtended : PlayerMatcherEntities
+        {
+            public virtual object SetModified(object entity) //this method is not otherwise mockable
+            {
+                Entry(entity).State = EntityState.Modified;
+                return entity;
+            }
+        }
 
-        public UsersController() : this(new PlayerMatcherEntities()) {}
+        private PlayerMatcherEntitiesExtended db;
+
+        public UsersController() : this(new PlayerMatcherEntitiesExtended()) {}
 
         public UsersController(PlayerMatcherEntities db)
         {
-            this.@db = @db;
+            this.@db = @db as PlayerMatcherEntitiesExtended;
         }
 
         // GET: Users
@@ -48,6 +57,8 @@ namespace PlayerMatcher.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "User_ID,User_Name,User_Password,Is_Online")] User user)
         {
+            if(user is null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //TODO this wont get hit beacasue of the create empty view controller GET: Users/Create
+
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
@@ -82,7 +93,7 @@ namespace PlayerMatcher.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
+                db.SetModified(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
