@@ -23,7 +23,7 @@ namespace Tests
         }
 
         [Test]
-        public void Create_AddNewUser()
+        public void Create_AddsNewUserAndRedirects()
         {
             var mockSet = new Mock<DbSet<User>>();
             var mockdb = new Mock<PlayerMatcherEntities>();
@@ -32,11 +32,10 @@ namespace Tests
             var controller = new UsersController(mockdb.Object);
             var user = new User() { User_ID = 1, User_Name = "Test One" };
 
-            var view = controller.Create(user);
-            var newUser = ((ViewResult)view).Model;
+            var redirect = controller.Create(user);
 
-            //Assert.IsInstanceOf<System.Web.Mvc.RedirectToRouteResult>(redirect);
-            Assert.AreEqual(newUser, user);
+            Assert.IsInstanceOf<RedirectToRouteResult>(redirect);
+            Assert.AreEqual(((RedirectToRouteResult)redirect).RouteValues["action"], "Index");
             mockSet.Verify(x => x.Add(It.IsAny<User>()), Times.Once);
             mockdb.Verify(x => x.SaveChanges());
         }
