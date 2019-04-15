@@ -6,7 +6,9 @@
 
 ## Review
 
-Overall the pace was consistent. The scope of the sprint expanded greatly, adding additional testing and hosting the application, but despite this most of the tickets were completed. Several tickets are still awaiting review however so the burdowns are slightly skewed as that is technically counted as still in progress.
+Overall the pace was consistent but the scope of the sprint expanded greatly adding additional testing and hosting the application, but despite this the tickets were mostly completed. Several tickets are still awaiting review however so the burdowns are largely skewed as that is technically counted as still in progress. The team needs to be better about revieiwing PRs.
+
+To further complicate reporting the selected tool did not work well with a 3 week sprint. We are still having issues with trello tools after trying 3 different providers.
 
 ![Burndown](burndown.png)
 
