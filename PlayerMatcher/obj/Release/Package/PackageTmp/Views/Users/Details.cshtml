@@ -1,0 +1,36 @@
+﻿@model PlayerMatcher.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h3>User Details</h3>
+
+<div>
+
+    <table class="table table-hover table-striped">
+        <tr>
+            <td><b>Username</b></td>
+            <td>@Html.DisplayFor(model => model.User_Name)</td>
+        </tr>
+        <tr>
+            <td><b>Password</b></td>
+            <td>@Guid.NewGuid()</td>
+        </tr>
+        <tr>
+            <td><b>Online</b></td>
+            <td>@if (@Model.Is_Online.Value)
+            {
+                @:Yes
+            }
+            else
+            {
+                @:No
+            }</td>
+        </tr>
+    </table>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.User_ID }, new { @class = "btn btn-default" })*@ 
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary btn-xs" })
+</p>

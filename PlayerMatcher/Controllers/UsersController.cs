@@ -44,7 +44,7 @@ namespace PlayerMatcher.Controllers
         // POST: Users/Create.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "User_ID,User_Name,User_Password,Is_Online")] User user)
+        public ActionResult Create([Bind(Include = "User_Name,User_Password,Is_Online")] User user)
         {
             if (ModelState.IsValid)
             {

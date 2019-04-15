@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PlayerMatcherEntitesStoreContainer" CdmEntityContainer="PlayerMatcherEntities">
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="PlayerMatcherEntites.Game">
+        <MappingFragment StoreEntitySet="Game">
+          <ScalarProperty Name="Max_Player_Count" ColumnName="Max_Player_Count" />
+          <ScalarProperty Name="Game_Name" ColumnName="Game_Name" />
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Game_Sessions">
+      <EntityTypeMapping TypeName="PlayerMatcherEntites.Game_Sessions">
+        <MappingFragment StoreEntitySet="Game_Sessions">
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+          <ScalarProperty Name="Session_End" ColumnName="Session_End" />
+          <ScalarProperty Name="Session_Start" ColumnName="Session_Start" />
+          <ScalarProperty Name="Game_Session_ID" ColumnName="Game_Session_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ratings">
+      <EntityTypeMapping TypeName="PlayerMatcherEntites.Rating">
+        <MappingFragment StoreEntitySet="Rating">
+          <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="User_Rating" ColumnName="User_Rating" />
+          <ScalarProperty Name="User_Rating_ID" ColumnName="User_Rating_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session_Users">
+      <EntityTypeMapping TypeName="PlayerMatcherEntites.Session_Users">
+        <MappingFragment StoreEntitySet="Session_Users">
+          <ScalarProperty Name="Users_ID" ColumnName="Users_ID" />
+          <ScalarProperty Name="Game_Session_ID" ColumnName="Game_Session_ID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="PlayerMatcherEntites.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Is_Online" ColumnName="Is_Online" />
+          <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+          <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
