@@ -6,6 +6,8 @@
 
 ## Review
 
+Overall the pace was consistent. The scope of the sprint expanded greatly, adding additional testing and hosting the application, but despite this most of the tickets were completed. Several tickets are still awaiting review however so the burdowns are slightly skewed as that is technically counted as still in progress.
+
 ![Burndown](burndown.png)
 
 beginning of the sprint
@@ -50,3 +52,41 @@ Decided to create a new card to work on refactoring the UI. This was outside of 
 
 chris and martin collab on backend
 kristin and souarev collab on fornt end redesign
+
+### 20190407
+Minutes for Apr 07, 2019
+
+Taken by Chris Taylor
+
+Present - Chris, Sourav
+
+No significant status changes due to missing team members upcoming meeting with stakeholder tomorrow.
+
+### 20190407
+Met with stakeholder (prof) to discuss current status and targets.
+
+Main outcome was to host application this sprint and focus more on a usable algorithm.
+
+### 20190412
+Taken by Chris Taylor
+
+Present - Chris, Sourav, Kristin
+
+Discussed plan to implement program on cloud infrastructure. Chris will do preliminary algorithm design. 
+
+### 20190414
+Present - Martin, chris
+
+Supposed to be a sprint review meeting but not enough members present to be effective.
+
+Martin
+Able to get context mocked and tests written for the user controller. Currently have 3, plan on 20 by the end of the day. Please keep an eye on PRs.
+
+Chris
+Having some trouble with frameworks for views
+Looked into elo and prepared for matching algorithm work
+Martin: put some documentation into the folder that contains the algorithm class that explains elo. Maybe use a strategy pattern?
+
+Discussed design of Matcher class
+
+Merged open PR
