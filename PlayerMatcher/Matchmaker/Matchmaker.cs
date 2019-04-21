@@ -29,10 +29,28 @@ namespace PlayerMatcher.Matchmaker
     public class Matchmaker
     {
         private PlayerMatcherEntities db = new PlayerMatcherEntities();
+        
 
         public List<PlayerData> ConstructMatch(int gameID, int numPlayers)
         {
-            int numTaken = 0; 
+            int numTaken = 0;
+
+            int minElo = 0;
+            int maxElo = 10000;
+
+            var GetPlayersQuery =
+                from players in db.Users
+                join ranks in db.Ratings on ranks.User_ID equals players.User_ID
+                where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
+                orderby players.User_Name
+                select new
+                {
+                    PlayerName = players.User_Name,
+                    EloRating = ranks.User_Rating
+                };
+
+
+
 
             return null;
         }
