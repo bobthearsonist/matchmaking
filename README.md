@@ -55,6 +55,10 @@ The services were chosen next in an order that was ranked by necessity, you need
 The algorithm was added last, while it is the core of the deliverable product it is also the most difficult, and doing a less featured implementation of it gets us to software that works faster, iterations could then improve it.
 
 ## Links
+
+Hosted application http://ksuplayermatcher.azurewebsites.net/Users
+
 Trello board for product backlog: https://trello.com/b/SxTVJTQK/matchmaking-product-backlog
+Slack channel invite link: https://join.slack.com/t/emergingprocesses/shared_invite/enQtNTQ0NjkyNjIyNDU0LTcyMzZkZmViZWMzYmQyYThiMmVmZmZiOTI5YzY0YmEzYzdiOTJiNzk2Mzg3ZGI5ZTMyOTFjMTVlMTM1ZWU0NWM
 
 [Burndown charts and other sprint information are in the documentation folder and are ordered by sprint](documentation/)

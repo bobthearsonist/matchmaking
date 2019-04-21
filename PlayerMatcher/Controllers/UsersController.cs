@@ -126,6 +126,16 @@ namespace PlayerMatcher.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult GetMatch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return View(db.Users.OrderBy(o => Guid.NewGuid()).Take(id.Value).ToList());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
