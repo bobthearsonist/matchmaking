@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@*<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -43,3 +43,160 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+
+
+
+*@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Player Matcher</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/themes/main-style.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300 " rel="stylesheet" type="text/css">
+    @*<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>*@
+    <title>Slide-Out Navigation Bar</title>
+</head>
+<body>
+
+
+
+    @if (((User)Session["user"]) != null)
+    {
+
+
+
+        <i class="fa fa-bars fa-2x toggle_menu"></i>
+        <div class="sidebar_menu">
+            <i class="fa fa-times"></i>
+
+
+                <center style="padding-top: 30px;">
+                    <a href="../../smartlogin/images/images9.jpg">
+                        <img src="../../smartlogin/images/images9.jpg" class="img img-responsive img-thumbnail" style=" height: 200px; width: 200px; border-radius: 50%;">
+                    </a>
+                </center>
+            
+            <center>
+              <a href="_Layout.cshtml"><h1 class="boxed_item"> <span class="logo_bold">@(((User)Session["user"]).User_Name)</span></h1></a>
+                @*<h2 class="logo_title">@(((Employee)Session["employee"]).JobTitle)</h2>*@
+            </center>
+
+            <ul class="navigation_selection">
+                <li class="navigation_item">
+                    Games
+                    <ul>
+                        <li id="subdrop">@Html.ActionLink("My Games", "GetGamesByUserID", "SessionUsers")</li>
+                        <li id="subdrop">@Html.ActionLink("Join Game", "Index", "Game_Sessions")</li>
+                    </ul>
+                </li>
+                <li class="navigation_item">
+                    Sessions
+                    <ul>
+                        <li id="subdrop">@Html.ActionLink("Add Session", "Create", "Game_Sessions")</li>
+                    </ul>
+                </li>
+                <li class="navigation_item">
+                    Ratings
+                    <ul>
+                        <li id="subdrop">@Html.ActionLink("Rate Game Skill", "Create", "Ratings")</li>
+                    </ul>
+                    <ul>
+                        <li id="subdrop">@Html.ActionLink("My Ratings", "Index", "Ratings")</li>
+                    </ul>
+                </li>
+     
+            </ul>
+
+        </div>
+
+    }
+
+    @if (((User)Session["user"]) != null)
+    {
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Player Matcher</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="user_icon"><i class="fa fa-user fa-2x"></i></li>
+                    <li class="user_login">@Html.ActionLink("Logout", "logout", "Users")</li>
+                </ul>
+            </div>
+        </nav>
+    }
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+</body>
+
+</html>
+@*<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />*@
+<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/dataTables.jqueryui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+
+
+<script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
+
+
+
+
+@RenderSection("scripts", required: false)
+<link href="~/Content/themes/main-style.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".fa-times").click(function () {
+            $(".sidebar_menu").addClass("hide_menu");
+            $(".toggle_menu").addClass("opacity_one");
+        });
+        $(".toggle_menu").click(function () {
+            $(".sidebar_menu").removeClass("hide_menu");
+            $(".toggle_menu").removeClass("opacity_one");
+        });
+    });
+        $(document).ready(function () {
+            $('.msTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5'
+                ]
+            });
+    });
+</script>
+
+@if (((User)Session["user"]) != null)
+{
+    <style>
+        body {
+            background-image: url('../../smartlogin/images/projectIm1.jpg');
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 100%;
+        }
+
+        .container {
+            background-color: rgba(255,255,255,0.10);
+        }
+    </style>
+
+}

@@ -43,3 +43,4 @@ C:\Users\krihe\OneDrive\Documents\Visual Studio 2017\Projects\PlayerMatcher\Play
 C:\Users\krihe\OneDrive\Documents\Visual Studio 2017\Projects\PlayerMatcher\PlayerMatcher\obj\Release\PlayerMatcher.csproj.CoreCompileInputs.cache
 C:\Users\krihe\OneDrive\Documents\Visual Studio 2017\Projects\PlayerMatcher\PlayerMatcher\obj\Release\PlayerMatcher.dll
 C:\Users\krihe\OneDrive\Documents\Visual Studio 2017\Projects\PlayerMatcher\PlayerMatcher\obj\Release\PlayerMatcher.pdb
+C:\Users\krihe\OneDrive\Documents\Visual Studio 2017\Projects\PlayerMatcher\PlayerMatcher\obj\Release\PlayerMatcher.csprojResolveAssemblyReference.cache

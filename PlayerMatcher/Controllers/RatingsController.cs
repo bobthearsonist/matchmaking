@@ -47,18 +47,25 @@ namespace PlayerMatcher.Controllers
         // POST: Ratings/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "User_Rating_ID,User_Rating,User_ID,Game_ID")] Rating rating)
+        public ActionResult Create(int Skill, int Friendliness, int Team, int Rate, int? Game_ID)
         {
-            if (ModelState.IsValid)
+            int skillLevel = (int)((10*(Skill + Friendliness + Team + Rate))/16);
+            var userLogedIn = (User)Session["user"];
+            var employeeLoggedIn = db.Ratings.Where(x => x.User_ID == userLogedIn.User_ID && x.Game_ID == Game_ID).FirstOrDefault();
+
+                Rating rating = new Rating();
+                rating.Game_ID = Game_ID;
+                rating.User_ID = userLogedIn.User_ID;
+                rating.User_Rating = skillLevel;
+            if (employeeLoggedIn == null)
             {
                 db.Ratings.Add(rating);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.Game_ID = new SelectList(db.Games, "Game_ID", "Game_Name", rating.Game_ID);
-            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name", rating.User_ID);
-            return View(rating);
+            else {
+                return RedirectToAction("Index");
+            }  
         }
 
         // GET: Ratings/Edit/5
@@ -83,6 +90,8 @@ namespace PlayerMatcher.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "User_Rating_ID,User_Rating,User_ID,Game_ID")] Rating rating)
         {
+            var userLogedIn = (User)Session["user"];
+            rating.User_ID = userLogedIn.User_ID;
             if (ModelState.IsValid)
             {
                 db.Entry(rating).State = EntityState.Modified;

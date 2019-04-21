@@ -35,7 +35,20 @@ namespace PlayerMatcher.Controllers
             }
             return View(session_Users);
         }
+        public ActionResult GetUsersBySessionId(int? sessionId)
+        {
+            var session_Users = db.Session_Users.Include(s => s.Game_Sessions).Include(s => s.User);
 
+            var usersBySession = session_Users.Where(x => x.Game_Session_ID == sessionId);
+
+            return View(usersBySession.ToList()); 
+        }
+        public ActionResult GetGamesByUserID() {
+            var session = (User)Session["user"];
+            var session_Users = db.Session_Users.Include(s => s.Game_Sessions).Include(s => s.User);
+            var sessionByUser = session_Users.Where(x => x.Users_ID == session.User_ID);
+            return View(sessionByUser.ToList());
+        }
         // GET: SessionUsers/Create
         public ActionResult Create()
         {
@@ -62,7 +75,31 @@ namespace PlayerMatcher.Controllers
             ViewBag.Users_ID = new SelectList(db.Users, "User_ID", "User_Name", session_Users.Users_ID);
             return View(session_Users);
         }
+        public ActionResult GetTeamByGameID(int? id) {
+            var session = (User)Session["user"];
+            var usersBySession = db.Session_Users.Where(x => x.Game_Session_ID == id.Value);
+            var sessionThis = db.Game_Sessions.Where(x => x.Game_Session_ID == id).FirstOrDefault();
+            var maxUsers = sessionThis.Game.Max_Player_Count;
+            if (usersBySession.Count() < maxUsers)
+            { //need to include the user logged in, so not <=
+                return View(usersBySession.ToList());
+            }
+            else {
 
+                return View(usersBySession.ToList());
+            }
+        }
+        [HttpGet]
+        public ActionResult AddUserToSession(int? id)
+        {
+            var userLogedIn = (User)Session["user"];
+            Session_Users session_Users = new Session_Users();
+            session_Users.Game_Session_ID = id.Value;
+            session_Users.Users_ID = userLogedIn.User_ID;
+            db.Session_Users.Add(session_Users);
+            db.SaveChanges();
+            return View();
+        }
         // GET: SessionUsers/Edit/5
         public ActionResult Edit(int? id)
         {

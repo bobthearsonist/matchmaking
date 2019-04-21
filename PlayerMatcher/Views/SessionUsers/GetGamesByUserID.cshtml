@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PlayerMatcher.Session_Users>
+
+@{
+    ViewBag.Title = "GetGamesByUserID";
+}
+<br>
+<br>
+<h2 style="color: black"><b>My Game Sessions</b></h2>
+<br>
+<br>
+<br>
+<br>
+<table class="table table-hover table-striped">
+    <thead>
+        <tr style="font-size:large">
+            <th>
+               <b> Game</b>
+            </th>
+            <th>
+                <b>Session Start</b>
+            </th>
+            <th>
+                <b>Session End</b>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Game_Sessions.Game.Game_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Game_Sessions.Session_Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Game_Sessions.Session_End)
+                </td>
+                <td>
+                    @Html.ActionLink("Start Game", "GetTeamByGameID", new { id = item.Game_Session_ID })
+                </td>
+            </tr>
+        </tbody>
+    }
+
+</table>
+
