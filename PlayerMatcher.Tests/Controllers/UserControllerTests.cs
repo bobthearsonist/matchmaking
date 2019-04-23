@@ -37,18 +37,6 @@ namespace ControllerTests
         }
 
         [Test]
-        //TODO current implementation returns list on call to create? seems non-REST. should 400.
-        public void Create_ThrowsWithNoUser()
-        {
-            var controller = new UsersController();
-
-            var response = controller.Create() as HttpStatusCodeResult;
-
-            response.Should().BeOfType<HttpStatusCodeResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
-
-        }
-
-        [Test]
         public void Details_ErrorsWhenIdNotProvided()
         {
             var data = new List<User>().AsQueryable();
