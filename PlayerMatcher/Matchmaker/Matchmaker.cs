@@ -1,44 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace PlayerMatcher.Matchmaker
 {
-    /*public class PlayerData
-    {
-        private int playerRating;
-        private int userID;
-        private List<int> behaviorAttributes;
-
-        public PlayerData(int id, int rating)
-        {
-            this.userID = id;
-            this.playerRating = rating;
-            this.behaviorAttributes = new List<int>();
-        }
-        public PlayerData(int id, int rating, List<int> attributes)
-        {
-            this.userID = id;
-            this.playerRating = rating;
-            this.behaviorAttributes = attributes;
-        }
-
-    }*/
-
     public class MatchConstructor
     {
         private int numTaken;        
         private int minElo;
         private int maxElo;
-        private PlayerMatcherEntities db; 
+        private PlayerMatcherEntities db;
 
-        public MatchConstructor()
+        public MatchConstructor() : this(new PlayerMatcherEntities()) {}
+
+        public MatchConstructor(PlayerMatcherEntities db)
         {
             numTaken = 0;
             minElo = 0;
             maxElo = 10000;
-            db = new PlayerMatcherEntities();
+            this.db = db;
         }
 
         
