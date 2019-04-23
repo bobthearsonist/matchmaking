@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using PlayerMatcher;
+using Newtonsoft.Json;
 
 namespace PlayerMatcher.Controllers
 {
@@ -30,9 +32,109 @@ namespace PlayerMatcher.Controllers
         {
             return View(db.Users.ToList());
         }
+        public User UserLoggedInSmart(User user) { 
+        
+            var employeeLoggedIn = db.Users.Where(x => x.User_Name == user.User_Name && x.User_Password == user.User_Password).FirstOrDefault();
+            return employeeLoggedIn;
 
-        // GET: Users/Details/5
-        public ActionResult Details(int? id)
+        }
+
+        /*private EmployeeRepository _userRepository;
+            private ManagementSystemEntities db2 = new ManagementSystemEntities();
+
+            public EmployeeController()
+            {
+                _userRepository = new EmployeeRepository();
+            }
+            */
+
+            [AllowAnonymous]
+            public ActionResult SmartLogin(string returnUrl)
+            {
+                ViewBag.ReturnUrl = returnUrl;
+                var employeeSession = (User)Session["user"];
+
+                if (employeeSession != null)
+                {
+                return View();
+                    //return RedirectToAction("WelcomePage", "Employee", new { employee = Session["employee"] });
+                }
+                else
+                {
+                    return View();
+                }
+            }
+
+            [HttpPost]
+            [AllowAnonymous]
+            [ValidateAntiForgeryToken]
+            public ActionResult SmartLogin(User user)
+            {
+                var userLoggedIn = UserLoggedInSmart(user);
+                if (userLoggedIn != null)
+                {
+                    ViewBag.message = "loggedin";
+                    ViewBag.triedOnce = "yes";
+
+
+                    Session["user"] = userLoggedIn;
+
+                    var userS = (User)Session["user"];
+                    //ViewBag.employeeTitle = employeeS.JobTitle;
+
+                    return RedirectToAction("Welcome", "Users", new { username = userLoggedIn?.User_Name });
+                }
+                else
+                {
+                    ViewBag.triedOnce = "yes";
+                    return View();
+                }
+
+            }
+            public ActionResult login()
+            {
+                var userSession = (User)Session["user"];
+
+                if (userSession != null)
+                {
+                    return RedirectToAction("Welcome", "Users", new { user = Session["user"] });
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            public ActionResult logout()
+            {
+                Session["user"] = null;
+                return RedirectToAction("SmartLogin", "Users");
+                //return View(new { employee = Session["employee"] });
+            }
+            [HttpPost]
+            public ActionResult login(User user)
+            {
+                var userSM = UserLoggedInSmart(user);
+                if (userSM != null)
+                {
+                    ViewBag.message = "loggedin";
+                    ViewBag.triedOnce = "yes";
+
+
+                    Session["user"] = userSM;
+
+                    var userS = (User)Session["user"];
+                    ViewBag.employeeTitle = userS.Is_Online;
+
+                    return RedirectToAction("Welcome", "Users", new { username = userSM?.User_Name });
+                }
+                else
+                {
+                    ViewBag.triedOnce = "yes";
+                    return View();
+                }
+            }
+            // GET: Users/Details/5
+            public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -51,11 +153,14 @@ namespace PlayerMatcher.Controllers
         {
             return View();
         }
+        public ActionResult Welcome() {
+            return View();
+        }
 
         // POST: Users/Create.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "User_ID,User_Name,User_Password,Is_Online")] User user)
+        public ActionResult Create([Bind(Include = "User_Name,User_Password,Is_Online")] User user)
         {
             if(user is null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //TODO this wont get hit beacasue of the create empty view controller GET: Users/Create
 
@@ -63,7 +168,7 @@ namespace PlayerMatcher.Controllers
             {
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("SmartLogin");
             }
 
             return View(user);

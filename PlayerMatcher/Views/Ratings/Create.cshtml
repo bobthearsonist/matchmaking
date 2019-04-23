@@ -7,58 +7,83 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+   @*<div class="form-horizontal">*@
         <h4>Rating</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@using (Html.BeginForm("Create", "Ratings", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <label for="Skill">Skill Level</label>
+           @*<input type="text" name="Skill" id="Skill" />*@
+            <select name="Skill" id="Skill">
+                <option value=1>This is my first game</option>
+                <option value=2>I started over 1 month ago</option>
+                <option value=3>I started over 6 months ago</option>
+                <option value=4>I've been playing for years</option>
+            </select>
+        </div>
+        </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.User_Rating_ID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.User_Rating_ID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.User_Rating_ID, "", new { @class = "text-danger" })
+                <label for="Friendliness">Friendliness</label>
+                @*<input type="text" name="Friendliness" id="Friendliness" />*@
+                <select name="Friendliness" id="Friendliness">
+                    <option value=1>I don't like other people</option>
+                    <option value=2>Somewhat Friendly</option>
+                    <option value=3>Friendly</option>
+                    <option value=4>I love other people</option>
+                </select>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.User_Rating, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.User_Rating, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.User_Rating, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.User_ID, "User_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("User_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.User_ID, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label for="Team">Team Player Skill</label>
+                   @* <input type="text" name="Team" id="Team" />*@
+                    <select name="Team" id="Team">
+                        <option value=1>I ride the loon baloon</option>
+                        <option value=2>Somewhat Skilled</option>
+                        <option value=3>Skilled Team Player</option>
+                        <option value=4>Give me team work, or give me death</option>
+                    </select>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Game_ID, "Game_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Game_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Game_ID, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label for="Rate">Winning Rate</label>
+                    @*<input type="text" name="Rate" id="Rate" />*@
+                    <select name="Rate" id="Rate">
+                        <option value=1>0 wins in 10 games</option>
+                        <option value=2>4 wins in 10 games</option>
+                        <option value=3>7 wins in 10 games</option>
+                        <option value=4>10 wins in 10 games</option>
+                    </select>
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownList("Game_ID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Game_ID, "Game_ID", new { @class = "text-danger" })
+                </div>
+                </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+
+                }
+                }
+                <div>
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+                }

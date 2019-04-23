@@ -12,7 +12,7 @@ namespace PlayerMatcher.Controllers
         // GET: Game_Sessions
         public ActionResult Index()
         {
-            var game_Sessions = db.Game_Sessions.Include(g => g.Game).Include(g => g.User);
+            var game_Sessions = db.Game_Sessions.Include(g => g.Game).Include(g => g.Session_Users);
             return View(game_Sessions.ToList());
         }
 
@@ -52,7 +52,7 @@ namespace PlayerMatcher.Controllers
             }
 
             ViewBag.Game_ID = new SelectList(db.Games, "Game_ID", "Game_Name", game_Sessions.Game_ID);
-            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name", game_Sessions.User_ID);
+            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name", game_Sessions.Session_Users);
             return View(game_Sessions);
         }
 
@@ -69,7 +69,7 @@ namespace PlayerMatcher.Controllers
                 return HttpNotFound();
             }
             ViewBag.Game_ID = new SelectList(db.Games, "Game_ID", "Game_Name", game_Sessions.Game_ID);
-            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name", game_Sessions.User_ID);
+            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name", game_Sessions.Session_Users);
             return View(game_Sessions);
         }
 
@@ -85,7 +85,7 @@ namespace PlayerMatcher.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Game_ID = new SelectList(db.Games, "Game_ID", "Game_Name", game_Sessions.Game_ID);
-            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name", game_Sessions.User_ID);
+            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name", game_Sessions.Session_Users);
             return View(game_Sessions);
         }
 
