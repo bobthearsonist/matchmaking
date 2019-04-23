@@ -26,22 +26,27 @@ namespace PlayerMatcher.Matchmaker
 
     }*/
 
-    public class Matchmaker
+    public class MatchConstructor
     {
-        public Matchmaker()
-        {
+        private int numTaken;        
+        private int minElo;
+        private int maxElo;
+        private PlayerMatcherEntities db; 
 
+        public MatchConstructor()
+        {
+            numTaken = 0;
+            minElo = 0;
+            maxElo = 10000;
+            db = new PlayerMatcherEntities();
         }
 
-        private PlayerMatcherEntities db = new PlayerMatcherEntities();
+        
         public List<User> ConstructMatch(int gameID, int numPlayers)
         {
             try
             {
-                int numTaken = 0;
-                int numToTake = 1;
-                int minElo = 0;
-                int maxElo = 10000;
+                int numToTake = numPlayers;
                 List<User> playersInMatch = new List<User>();
                 List<int> listOfElos = new List<int>();
 

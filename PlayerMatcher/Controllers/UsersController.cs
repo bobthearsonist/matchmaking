@@ -119,8 +119,9 @@ namespace PlayerMatcher.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            return View(db.Users.OrderBy(o => Guid.NewGuid()).Take(id.Value).ToList());
+            Matchmaker.MatchConstructor mm = new Matchmaker.MatchConstructor();
+            return View(mm.ConstructMatch(25, id.Value));
+            //return View(db.Users.OrderBy(o => Guid.NewGuid()).Take(id.Value).ToList());
         }
 
         protected override void Dispose(bool disposing)
