@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/87o4wqq178t5o4x5?svg=true)](https://ci.appveyor.com/project/bobthearsonist/matchmaking/branch/master)
+
 ## Product Vision
 
 Enhance online gameplay and restore community feel to gaming via the creation of matchmaking teams of selectable size from a known list of players with attributes based on game skill, playing style, and social behavior.

@@ -25,9 +25,9 @@ namespace PlayerMatcher
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Game> Games { get; set; }
-        public DbSet<Game_Sessions> Game_Sessions { get; set; }
-        public DbSet<Rating> Ratings { get; set; }
-        public DbSet<User> Users { get; set; }
+        public virtual DbSet<Game> Games { get; set; }
+        public virtual DbSet<Game_Sessions> Game_Sessions { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }
