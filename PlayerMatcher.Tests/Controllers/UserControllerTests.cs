@@ -181,7 +181,8 @@ namespace ControllerTests
             var view = controller.Delete(1) as ViewResult;
 
             // Assert
-            view.Should().BeOfType<ViewResult>().Which.Model.Should().Be(new User() { User_ID = 1, User_Name = "Test One" });
+            view.Should().BeOfType<ViewResult>().Which.Model.Should().BeOfType<User>().Which.User_ID.Should().Be(1);
+            view.Should().BeOfType<ViewResult>().Which.Model.Should().BeOfType<User>().Which.User_Name.Should().Be("Test One");
         }
 
         [Test]
