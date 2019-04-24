@@ -21,7 +21,8 @@ namespace PlayerMatcher.Matchmaker
             this.db = db;
         }
 
-        
+        readonly int window = 12;
+
         public List<User> ConstructMatch(int gameID, int numPlayers)
         {
             try
@@ -30,12 +31,17 @@ namespace PlayerMatcher.Matchmaker
                 List<User> playersInMatch = new List<User>();
                 List<int> listOfElos = new List<int>();
 
+                var totalGamePlayers = (from players in db.Users
+                                        join ranks in db.Ratings on players.User_ID equals ranks.User_ID
+                                        where ranks.Game_ID == gameID
+                                        select players).Count();
+
+                if (totalGamePlayers < numToTake) numToTake = totalGamePlayers;
+
                 while (numTaken != numPlayers)
                 {
-                    if (numTaken != 0)
-                    {
-                        numToTake = numPlayers - numTaken;
-                    }
+                    if (numTaken != 0) numToTake = numPlayers - numTaken;
+
                     var GetPlayersQuery =
                         from players in db.Users
                         join ranks in db.Ratings on players.User_ID equals ranks.User_ID
@@ -46,6 +52,7 @@ namespace PlayerMatcher.Matchmaker
                             Player = players,
                             EloRating = ranks.User_Rating.GetValueOrDefault()
                         };
+
                     foreach (var matchPlayer in GetPlayersQuery)
                     {
                         playersInMatch.Add(matchPlayer.Player);
@@ -56,17 +63,19 @@ namespace PlayerMatcher.Matchmaker
                             break;
                         }
                     }
+
                     if (numTaken == 1)
                     {
-                        minElo = listOfElos[0] - 12;
-                        maxElo = listOfElos[0] + 12;
+                        minElo = listOfElos[0] - window;
+                        maxElo = listOfElos[0] + window;
                     }
                     else
                     {
-                        minElo = minElo - 12;
-                        maxElo = maxElo - 12;
+                        minElo = minElo - window;
+                        maxElo = maxElo - window;
                     }
                 }
+
                 return playersInMatch;
             }
             catch (Exception ex)
