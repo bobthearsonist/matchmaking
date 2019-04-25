@@ -23,6 +23,15 @@ namespace PlayerMatcher.Matchmaker
             int minElo = 0;
             int maxElo = 10000;
 
+            if ( numPlayers < 0 )
+            {
+                throw new ArgumentOutOfRangeException("numPlayers should be a positive integer");
+            }
+            if ( gameID < 0 )
+            {
+                throw new ArgumentException("invalid game id");
+            }
+
             try
             {
                 int numToTake = numPlayers;
