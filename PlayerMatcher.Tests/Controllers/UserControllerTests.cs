@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using Moq;
 using PlayerMatcher.Controllers;
-using PlayerMatcher;
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
 using FluentAssertions;
 using System.Net;
 
-namespace ControllerTests
+namespace PlayerMatcher.Tests
 {
     public class UserControllerTests
     {
@@ -39,12 +38,8 @@ namespace ControllerTests
         [Test]
         public void Details_ErrorsWhenIdNotProvided()
         {
-            var data = new List<User>().AsQueryable();
-            var mockSet = new Mock<DbSet<User>>();
-            mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+            var data = new List<User>();
+            var mockSet = Mock.CreateMockSet(data);
             mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));
             var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
@@ -62,11 +57,7 @@ namespace ControllerTests
             var data = new List<User> {
                 new User(){ User_ID = 1, User_Name = "Test One" },
             }.AsQueryable();
-            var mockSet = new Mock<DbSet<User>>();
-            mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+            var mockSet = Mock.CreateMockSet(data);
             mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));
             var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
@@ -88,11 +79,7 @@ namespace ControllerTests
                 new User(){ User_ID = 1, User_Name = "Test One" },
                 new User(){ User_ID = 2, User_Name = "Test Two" },
             }.AsQueryable();
-            var mockSet = new Mock<DbSet<User>>();
-            mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+            var mockSet = Mock.CreateMockSet(data);
             var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.Users).Returns(mockSet.Object);
             var controller = new UsersController(mockdb.Object);
@@ -131,11 +118,7 @@ namespace ControllerTests
             var data = new List<User> {
                 new User(){ User_ID = 2, User_Name = "Test Two" },
             }.AsQueryable();
-            var mockSet = new Mock<DbSet<User>>();
-            mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+            var mockSet = Mock.CreateMockSet(data);
             mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));
             var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
@@ -167,11 +150,7 @@ namespace ControllerTests
             var data = new List<User> {
                 new User(){ User_ID = 1, User_Name = "Test One" },
             }.AsQueryable();
-            var mockSet = new Mock<DbSet<User>>();
-            mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+            var mockSet = Mock.CreateMockSet(data);
             mockSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));
             var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.Users).Returns(mockSet.Object);
@@ -193,13 +172,8 @@ namespace ControllerTests
                 new User(){ User_ID = 1, User_Name = "Test One" },
                 new User(){ User_ID = 2, User_Name = "Test Two" },
             }.AsQueryable();
-            var mockSet = new Mock<DbSet<User>>();
-            mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
-            mockSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));
-            var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
+            var mockSet = Mock.CreateMockSet(data);
+            mockSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));            var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.Users).Returns(mockSet.Object);
             var controller = new UsersController(mockdb.Object);
 

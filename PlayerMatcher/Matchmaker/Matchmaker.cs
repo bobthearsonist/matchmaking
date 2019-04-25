@@ -5,19 +5,13 @@ using System.Linq;
 namespace PlayerMatcher.Matchmaker
 {
     public class MatchConstructor
-    {
-        private int numTaken;        
-        private int minElo;
-        private int maxElo;
+    {     
         private PlayerMatcherEntities db;
 
         public MatchConstructor() : this(new PlayerMatcherEntities()) {}
 
         public MatchConstructor(PlayerMatcherEntities db)
         {
-            numTaken = 0;
-            minElo = 0;
-            maxElo = 10000;
             this.db = db;
         }
 
@@ -25,6 +19,10 @@ namespace PlayerMatcher.Matchmaker
 
         public List<User> ConstructMatch(int gameID, int numPlayers)
         {
+            int numTaken = 0;
+            int minElo = 0;
+            int maxElo = 10000;
+
             try
             {
                 int numToTake = numPlayers;
@@ -38,7 +36,7 @@ namespace PlayerMatcher.Matchmaker
 
                 if (totalGamePlayers < numToTake) numToTake = totalGamePlayers;
 
-                while (numTaken != numPlayers)
+                while (numTaken != numToTake)
                 {
                     if (numTaken != 0) numToTake = numPlayers - numTaken;
 
