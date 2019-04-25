@@ -45,9 +45,9 @@ namespace PlayerMatcher.Matchmaker
 
                 if (totalGamePlayers < numToTake) numToTake = totalGamePlayers;
 
-                while (numTaken != numToTake)
+                while (playersInMatch.Count < numToTake)
                 {
-                    if (numTaken != 0) numToTake = numPlayers - numTaken;
+                    if (numTaken != 0) numToTake = numToTake - numTaken;
 
                     var GetPlayersQuery =
                         from players in db.Users
@@ -60,15 +60,11 @@ namespace PlayerMatcher.Matchmaker
                             EloRating = ranks.User_Rating.GetValueOrDefault()
                         };
 
-                    foreach (var matchPlayer in GetPlayersQuery)
+                    foreach (var matchPlayer in GetPlayersQuery.Take(numToTake))
                     {
                         playersInMatch.Add(matchPlayer.Player);
                         listOfElos.Add(matchPlayer.EloRating);
                         numTaken++;
-                        if (playersInMatch.Count == numToTake)
-                        {
-                            break;
-                        }
                     }
 
                     if (numTaken == 1)
@@ -85,10 +81,11 @@ namespace PlayerMatcher.Matchmaker
 
                 return playersInMatch;
             }
-            catch (Exception ex)
+            catch (Exception)
+            // TODO as a ROT you dont want to catch all expcetions, for example this would still catch a seg fault, or ENOT system exception lets change the type here to catch a specific exception type that you were encountering  or remvoe the try catch entirely and let the aprent handle the exception
             {
                 Console.WriteLine("Caught exception. Suspect that Elo rating was missing");
-                return null;
+                throw;
             }
         }
     }    
