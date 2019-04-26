@@ -4,39 +4,33 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h3>User Details</h3>
 
 <div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.User_Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.User_Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User_Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User_Password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Is_Online)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Is_Online)
-        </dd>
-
-    </dl>
+    <table class="table table-hover table-striped">
+        <tr>
+            <td><b>Username</b></td>
+            <td>@Html.DisplayFor(model => model.User_Name)</td>
+        </tr>
+        <tr>
+            <td><b>Password</b></td>
+            <td>@Guid.NewGuid()</td>
+        </tr>
+        <tr>
+            <td><b>Online</b></td>
+            <td>@if (@Model.Is_Online.Value)
+            {
+                @:Yes
+            }
+            else
+            {
+                @:No
+            }</td>
+        </tr>
+    </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.User_ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.User_ID }, new { @class = "btn btn-default" })*@ 
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary btn-xs" })
 </p>

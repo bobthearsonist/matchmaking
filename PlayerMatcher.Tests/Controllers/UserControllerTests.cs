@@ -31,7 +31,7 @@ namespace ControllerTests
             var redirect = controller.Create(user);
 
             Assert.IsInstanceOf<RedirectToRouteResult>(redirect);
-            Assert.AreEqual(((RedirectToRouteResult)redirect).RouteValues["action"], "Index");
+            Assert.AreEqual(((RedirectToRouteResult)redirect).RouteValues["action"], "SmartLogin");
             mockSet.Verify(x => x.Add(It.IsAny<User>()), Times.Once);
             mockdb.Verify(x => x.SaveChanges());
         }

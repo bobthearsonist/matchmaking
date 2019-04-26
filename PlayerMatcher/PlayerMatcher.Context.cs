@@ -28,6 +28,7 @@ namespace PlayerMatcher
         public virtual DbSet<Game> Games { get; set; }
         public virtual DbSet<Game_Sessions> Game_Sessions { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
+        public virtual DbSet<Session_Users> Session_Users { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }
