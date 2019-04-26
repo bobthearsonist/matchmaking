@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System;
+using PlayerMatcher.Matchmaker;
 using PlayerMatcher;
 using Newtonsoft.Json;
 
@@ -238,8 +239,9 @@ namespace PlayerMatcher.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            return View(db.Users.OrderBy(o => Guid.NewGuid()).Take(id.Value).ToList());
+            MatchConstructor mm = new MatchConstructor();
+            return View(mm.ConstructMatch(25, id.Value));
+            //return View(db.Users.OrderBy(o => Guid.NewGuid()).Take(id.Value).ToList());
         }
 
         protected override void Dispose(bool disposing)
