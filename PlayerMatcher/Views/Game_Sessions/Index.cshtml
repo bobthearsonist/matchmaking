@@ -3,49 +3,61 @@
 @{
     ViewBag.Title = "Index";
 }
+<br>
+<br>
+<h2 style="color: black"><b>Game Sessions</b></h2>
+<br>
+<br>
+<br>
+<br>
+<table class="table table-hover table-striped">
+    <thead>
+        <tr style="font-size:large">
+            <th>
+                Game
+            </th>
+            <th>
+                Session Start
+            </th>
+            <th>
+                Session End
+            </th>
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Session_Start)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Session_End)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Game.Game_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.User_Name)
-        </th>
-        <th></th>
-    </tr>
+            <th></th>
+        </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Session_Start)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Session_End)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Game.Game_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.User_Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Game_Session_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Game_Session_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Game_Session_ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Game.Game_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Session_Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Session_End)
+            </td>
+
+
+            @*
+                @foreach (var user in item.Session_Users.ToList())
+                {
+                    @Html.DisplayFor(modelItem => user.User.User_Name)
+                    @:</br>
+                }
+            *@
+
+
+
+            <td>
+                @Html.ActionLink("Join Session", "AddUserToSession", "SessionUsers", new { id = item.Game_Session_ID }, null) 
+            </td>
+        </tr>
+            </tbody>
+    }
 
 </table>

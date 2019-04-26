@@ -1,0 +1,36 @@
+﻿@model IEnumerable<PlayerMatcher.Session_Users>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br>
+<br>
+<h2 style="color: black"><b>Your Team</b></h2>
+<br>
+<br>
+<br>
+<table class="table table-hover table-striped">
+    <thead>
+        <tr style="font-size:large">
+        
+            <th>
+                User Name
+            </th>
+
+            <th></th>
+        </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.User_Name)
+                </td>
+                <td></td>
+            </tr>
+                </tbody>
+        }
+
+</table>
