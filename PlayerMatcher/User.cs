@@ -16,8 +16,8 @@ namespace PlayerMatcher
     {
         public User()
         {
-            this.Game_Sessions = new HashSet<Game_Sessions>();
             this.Ratings = new HashSet<Rating>();
+            this.Session_Users = new HashSet<Session_Users>();
         }
     
         public int User_ID { get; set; }
@@ -25,7 +25,7 @@ namespace PlayerMatcher
         public string User_Password { get; set; }
         public Nullable<bool> Is_Online { get; set; }
     
-        public virtual ICollection<Game_Sessions> Game_Sessions { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
+        public virtual ICollection<Session_Users> Session_Users { get; set; }
     }
 }

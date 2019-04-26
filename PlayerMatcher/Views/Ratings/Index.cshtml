@@ -4,42 +4,47 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<br>
+<br>
+<h2 style="color: black"><b>My Game Sessions</b></h2>
+<br>
+<br>
+<br>
+<table class="table table-hover table-striped">
+    <thead>
+        <tr style="font-size:large">
+            <th>
+                Rating
+            </th>
+            <th>
+                Game
+            </th>
+            <th>
+                Username
+            </th>
+            <th></th>
+        </tr>
+        </thead>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.User_Rating)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Game.Game_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.User_Name)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.User_Rating)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Game.Game_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.User_Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.User_Rating_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.User_Rating_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.User_Rating_ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User_Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Game.Game_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.User_Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.User_Rating_ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.User_Rating_ID })
+            </td>
+        </tr>
+            </tbody>
+    }
 
 </table>

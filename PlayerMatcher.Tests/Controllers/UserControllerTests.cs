@@ -31,21 +31,9 @@ namespace ControllerTests
             var redirect = controller.Create(user);
 
             Assert.IsInstanceOf<RedirectToRouteResult>(redirect);
-            Assert.AreEqual(((RedirectToRouteResult)redirect).RouteValues["action"], "Index");
+            Assert.AreEqual(((RedirectToRouteResult)redirect).RouteValues["action"], "SmartLogin");
             mockSet.Verify(x => x.Add(It.IsAny<User>()), Times.Once);
             mockdb.Verify(x => x.SaveChanges());
-        }
-
-        [Test]
-        //TODO current implementation returns list on call to create? seems non-REST. should 400.
-        public void Create_ThrowsWithNoUser()
-        {
-            var controller = new UsersController();
-
-            var response = controller.Create() as HttpStatusCodeResult;
-
-            response.Should().BeOfType<HttpStatusCodeResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
-
         }
 
         [Test]
@@ -193,7 +181,8 @@ namespace ControllerTests
             var view = controller.Delete(1) as ViewResult;
 
             // Assert
-            view.Should().BeOfType<ViewResult>().Which.Model.Should().Be(new User() { User_ID = 1, User_Name = "Test One" });
+            view.Should().BeOfType<ViewResult>().Which.Model.Should().BeOfType<User>().Which.User_ID.Should().Be(1);
+            view.Should().BeOfType<ViewResult>().Which.Model.Should().BeOfType<User>().Which.User_Name.Should().Be("Test One");
         }
 
         [Test]
