@@ -20,8 +20,10 @@ namespace PlayerMatcher.Matchmaker
         public List<User> ConstructMatch(int gameID, int numPlayers)
         {
             int numTaken = 0;
-            int minElo = 1;
+            int minElo = 0;
             int maxElo = 10000;
+            int maxRuns = 100;
+            int runs = 0;
 
             if (numPlayers < 0)
             {
@@ -44,16 +46,16 @@ namespace PlayerMatcher.Matchmaker
 
                 if (totalGamePlayers < numToTake) numToTake = totalGamePlayers;
 
-                while (playersInMatch.Count < numToTake)
+                while (playersInMatch.Count < numToTake && runs < maxRuns)
                 {
                     if (numTaken != 0) numForQuery = numToTake - numTaken;
+                    runs++;
 
                     var GetPlayersQuery =
                         from players in db.Users
                         join ranks in db.Ratings on players.User_ID equals ranks.User_ID
                         where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
-                        //orderby ranks.User_Rating ascending
-                        orderby players.Behavior_Score ascending
+                        orderby Guid.NewGuid()
                         select new
                         {
                             Player = players,
@@ -70,17 +72,22 @@ namespace PlayerMatcher.Matchmaker
                         }
                     }
 
-                    if (numTaken == 1)
+                    if (runs == 1)
                     {
                         minElo = listOfElos[0] - window;
                         maxElo = listOfElos[0] + window;
+                    }
+                    else if (runs % 3 == 0)
+                    {
+                        minElo = minElo - window * 2;
+                        maxElo = maxElo + window * 2;
                     }
                     else
                     {
                         minElo = minElo - window;
                         maxElo = maxElo - window;
                     }
-                    if (minElo < 1) minElo = 1;
+                    if (minElo < 0) minElo = 0;                    
                 }
 
                 return playersInMatch;
