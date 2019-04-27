@@ -16,8 +16,8 @@ namespace PlayerMatcher.Tests.Matchmaker
             // Arrange
             var mockSetUsers = Mock.CreateMockSet(
                 new List<User> {
-                    new User(){ User_ID = 1, User_Name = "One" },
-                    new User(){ User_ID = 2, User_Name = "Two" }
+                    new User(){ User_ID = 1, User_Name = "One", Behavior_Score = 0 },
+                    new User(){ User_ID = 2, User_Name = "Two", Behavior_Score = 0 }
                 }
             );
 
@@ -37,8 +37,8 @@ namespace PlayerMatcher.Tests.Matchmaker
 
             // Assert
             match.Should().AllBeOfType<User>().And.HaveCount(2);
-            match.Should().ContainEquivalentOf( new User(){ User_ID = 1, User_Name = "One" } );
-            match.Should().ContainEquivalentOf( new User() { User_ID = 2, User_Name = "Two" } );
+            match.Should().ContainEquivalentOf( new User(){ User_ID = 1, User_Name = "One", Behavior_Score = 0 } );
+            match.Should().ContainEquivalentOf( new User() { User_ID = 2, User_Name = "Two", Behavior_Score = 0 } );
         }
 
         [Test]
@@ -47,9 +47,9 @@ namespace PlayerMatcher.Tests.Matchmaker
             // Arrange
             var mockSetUsers = Mock.CreateMockSet(
                 new List<User> {
-                    new User(){ User_ID = 1, User_Name = "One" },
-                    new User(){ User_ID = 2, User_Name = "Two" },
-                    new User(){ User_ID = 3, User_Name = "Three"}
+                    new User(){ User_ID = 1, User_Name = "One", Behavior_Score = 0 },
+                    new User(){ User_ID = 2, User_Name = "Two", Behavior_Score = 0 },
+                    new User(){ User_ID = 3, User_Name = "Three", Behavior_Score = 0}
                 }
             );
 
@@ -78,9 +78,9 @@ namespace PlayerMatcher.Tests.Matchmaker
             // Arrange
             var mockSetUsers = Mock.CreateMockSet(
                 new List<User> {
-                    new User(){ User_ID = 1, User_Name = "One" },
-                    new User(){ User_ID = 2, User_Name = "Two" },
-                    new User(){ User_ID = 3, User_Name = "Three"}
+                    new User(){ User_ID = 1, User_Name = "One", Behavior_Score = 0 },
+                    new User(){ User_ID = 2, User_Name = "Two", Behavior_Score = 0 },
+                    new User(){ User_ID = 3, User_Name = "Three", Behavior_Score = 0}
                 }
             );
 
@@ -104,15 +104,17 @@ namespace PlayerMatcher.Tests.Matchmaker
         }
 
         [Test]
-        [Ignore("this should work once we update the algorithm")]
+        //[Ignore("this should work once we update the algorithm")]
         public void ConstructMatch_GroupsBySkill()
         {
             // Arrange
             var mockSetUsers = Mock.CreateMockSet(
                 new List<User> {
-                    new User(){ User_ID = 1, User_Name = "One" },
-                    new User(){ User_ID = 2, User_Name = "Two" },
-                    new User(){ User_ID = 3, User_Name = "Three"}
+                    new User(){ User_ID = 1, User_Name = "One", Behavior_Score = 1 },
+                    new User(){ User_ID = 2, User_Name = "Two", Behavior_Score = 0 },
+                    new User(){ User_ID = 3, User_Name = "Three", Behavior_Score = 5},
+                    new User(){ User_ID = 4, User_Name = "Four", Behavior_Score = 3},
+                    new User(){ User_ID = 5, User_Name = "Five", Behavior_Score = 8}
                 }
             );
 
@@ -150,7 +152,9 @@ namespace PlayerMatcher.Tests.Matchmaker
                 new List<User> {
                     new User(){ User_ID = 1, User_Name = "One" },
                     new User(){ User_ID = 2, User_Name = "Two" },
-                    new User(){ User_ID = 3, User_Name = "Three"}
+                    new User(){ User_ID = 3, User_Name = "Three"},
+                    new User(){ User_ID = 4, User_Name = "Four"},
+                    new User(){ User_ID = 5, User_Name = "Five"}
                 }
             );
 
@@ -184,9 +188,9 @@ namespace PlayerMatcher.Tests.Matchmaker
             // Arrange
             var mockSetUsers = Mock.CreateMockSet(
                 new List<User> {
-                    new User(){ User_ID = 1, User_Name = "One" },
-                    new User(){ User_ID = 2, User_Name = "Two" },
-                    new User(){ User_ID = 3, User_Name = "Three"}
+                    new User(){ User_ID = 1, User_Name = "One", Behavior_Score = 0 },
+                    new User(){ User_ID = 2, User_Name = "Two", Behavior_Score = 0 },
+                    new User(){ User_ID = 3, User_Name = "Three", Behavior_Score = 0}
                 }
             );
 

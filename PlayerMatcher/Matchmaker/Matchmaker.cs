@@ -5,10 +5,10 @@ using System.Linq;
 namespace PlayerMatcher.Matchmaker
 {
     public class MatchConstructor
-    {     
+    {
         private PlayerMatcherEntities db;
 
-        public MatchConstructor() : this(new PlayerMatcherEntities()) {}
+        public MatchConstructor() : this(new PlayerMatcherEntities()) { }
 
         public MatchConstructor(PlayerMatcherEntities db)
         {
@@ -20,21 +20,20 @@ namespace PlayerMatcher.Matchmaker
         public List<User> ConstructMatch(int gameID, int numPlayers)
         {
             int numTaken = 0;
-            int minElo = 0;
+            int minElo = 1;
             int maxElo = 10000;
 
-            if ( numPlayers < 0 )
+            if (numPlayers < 0)
             {
                 throw new ArgumentOutOfRangeException("numPlayers should be a positive integer");
             }
-            if ( gameID < 0 )
+            if (gameID < 0)
             {
                 throw new ArgumentException("invalid game id");
             }
-
-            try
             {
                 int numToTake = numPlayers;
+                int numForQuery = 1;
                 List<User> playersInMatch = new List<User>();
                 List<int> listOfElos = new List<int>();
 
@@ -47,24 +46,28 @@ namespace PlayerMatcher.Matchmaker
 
                 while (playersInMatch.Count < numToTake)
                 {
-                    if (numTaken != 0) numToTake = numToTake - numTaken;
+                    if (numTaken != 0) numForQuery = numToTake - numTaken;
 
                     var GetPlayersQuery =
                         from players in db.Users
                         join ranks in db.Ratings on players.User_ID equals ranks.User_ID
                         where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
-                        orderby ranks.User_Rating ascending
+                        //orderby ranks.User_Rating ascending
+                        orderby players.Behavior_Score ascending
                         select new
                         {
                             Player = players,
                             EloRating = ranks.User_Rating.GetValueOrDefault()
-                        };
+                        };                   
 
-                    foreach (var matchPlayer in GetPlayersQuery.Take(numToTake))
+                    foreach (var matchPlayer in GetPlayersQuery.Take(numForQuery))
                     {
-                        playersInMatch.Add(matchPlayer.Player);
-                        listOfElos.Add(matchPlayer.EloRating);
-                        numTaken++;
+                        if (!playersInMatch.Contains(matchPlayer.Player))
+                        {
+                            playersInMatch.Add(matchPlayer.Player);
+                            listOfElos.Add(matchPlayer.EloRating);
+                            numTaken++;
+                        }
                     }
 
                     if (numTaken == 1)
@@ -77,16 +80,12 @@ namespace PlayerMatcher.Matchmaker
                         minElo = minElo - window;
                         maxElo = maxElo - window;
                     }
+                    if (minElo < 1) minElo = 1;
                 }
 
                 return playersInMatch;
-            }
-            catch (Exception)
-            // TODO as a ROT you dont want to catch all expcetions, for example this would still catch a seg fault, or ENOT system exception lets change the type here to catch a specific exception type that you were encountering  or remvoe the try catch entirely and let the aprent handle the exception
-            {
-                Console.WriteLine("Caught exception. Suspect that Elo rating was missing");
-                throw;
+
             }
         }
-    }    
+    }
 }
