@@ -7,8 +7,9 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using FluentAssertions;
 using System.Net;
+using PlayerMatcher.Models;
 
-namespace PlayerMatcher.Tests
+namespace PlayerMatcher.Tests.Controllers
 {
     public class UserControllerTests
     {
@@ -21,7 +22,7 @@ namespace PlayerMatcher.Tests
         public void Create_AddsNewUserAndRedirects()
         {
             var mockSet = new Mock<DbSet<User>>();
-            var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
+            var mockdb = new Mock<PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.Users)
                 .Returns(mockSet.Object);
             var controller = new UsersController(mockdb.Object);
@@ -42,7 +43,7 @@ namespace PlayerMatcher.Tests
             var mockSet = Mock.CreateMockSet(data);
             mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));
-            var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
+            var mockdb = new Mock<PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.Users).Returns(mockSet.Object);
             var controller = new UsersController(mockdb.Object);
 
@@ -60,7 +61,7 @@ namespace PlayerMatcher.Tests
             var mockSet = Mock.CreateMockSet(data);
             mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));
-            var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
+            var mockdb = new Mock<PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.Users).Returns(mockSet.Object);
             var controller = new UsersController(mockdb.Object);
 
@@ -78,9 +79,9 @@ namespace PlayerMatcher.Tests
             var data = new List<User> {
                 new User(){ User_ID = 1, User_Name = "Test One" },
                 new User(){ User_ID = 2, User_Name = "Test Two" },
-            }.AsQueryable();
+            };
             var mockSet = Mock.CreateMockSet(data);
-            var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
+            var mockdb = new Mock<PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.Users).Returns(mockSet.Object);
             var controller = new UsersController(mockdb.Object);
 
@@ -97,7 +98,7 @@ namespace PlayerMatcher.Tests
         public void Edit_EditAnItem()
         {
             // Arrange
-            var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
+            var mockdb = new Mock<PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.SetModified(It.IsAny<User>())).Returns<object>(u => u);
             var controller = new UsersController(mockdb.Object);
 
@@ -121,7 +122,7 @@ namespace PlayerMatcher.Tests
             var mockSet = Mock.CreateMockSet(data);
             mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));
-            var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
+            var mockdb = new Mock<PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.Users).Returns(mockSet.Object);
             var controller = new UsersController(mockdb.Object);
 
@@ -152,7 +153,7 @@ namespace PlayerMatcher.Tests
             }.AsQueryable();
             var mockSet = Mock.CreateMockSet(data);
             mockSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));
-            var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
+            var mockdb = new Mock<PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.Users).Returns(mockSet.Object);
             var controller = new UsersController(mockdb.Object);
 
@@ -173,7 +174,8 @@ namespace PlayerMatcher.Tests
                 new User(){ User_ID = 2, User_Name = "Test Two" },
             }.AsQueryable();
             var mockSet = Mock.CreateMockSet(data);
-            mockSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));            var mockdb = new Mock<UsersController.PlayerMatcherEntitiesExtended>();
+            mockSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns<object[]>(ids => data.FirstOrDefault(d => d.User_ID == (int)ids[0]));
+            var mockdb = new Mock<PlayerMatcherEntitiesExtended>();
             mockdb.Setup(db => db.Users).Returns(mockSet.Object);
             var controller = new UsersController(mockdb.Object);
 
