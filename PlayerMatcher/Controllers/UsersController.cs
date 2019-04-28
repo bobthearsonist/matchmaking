@@ -240,7 +240,7 @@ namespace PlayerMatcher.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             MatchConstructor mm = new MatchConstructor();
-            return View(mm.ConstructMatch(25, id.Value));
+            return View(mm.ConstructMatch(25, id.Value, false));
             //return View(db.Users.OrderBy(o => Guid.NewGuid()).Take(id.Value).ToList());
         }
 
