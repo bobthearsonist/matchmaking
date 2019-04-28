@@ -11,7 +11,7 @@ using PlayerMatcher.Models;
 
 namespace PlayerMatcher.Tests.Controllers
 {
-    public class UsersControllerTests
+    public class UserControllerTests
     {
         [SetUp]
         public void Setup()
