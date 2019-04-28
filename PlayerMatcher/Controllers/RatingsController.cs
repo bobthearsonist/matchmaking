@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using PlayerMatcher;
 
 namespace PlayerMatcher.Controllers
 {
-    public class RatingsController : Controller
+    public class RatingsController : BaseController
     {
-        private PlayerMatcherEntities db = new PlayerMatcherEntities();
+        public RatingsController() : base() {}
+        public RatingsController(PlayerMatcherEntities db) : base(db) {}
 
         // GET: Ratings
         public ActionResult Index()
