@@ -335,7 +335,7 @@ namespace PlayerMatcher.Tests.Matchmaker
 
             var mockSetRatings = Mock.CreateMockSet(
                 new List<Rating> {
-                    new Rating(){ User_ID = 1, Game_ID = 1, User_Rating = 100, Behavior_Score = 0 },
+                    new Rating(){ User_ID = 1, Game_ID = 1, User_Rating = 103, Behavior_Score = 0 },
                     new Rating(){ User_ID = 2, Game_ID = 1, User_Rating = 108, Behavior_Score = 1 },
                     new Rating(){ User_ID = 3, Game_ID = 1, User_Rating = 112, Behavior_Score = 8 },
                     new Rating(){ User_ID = 4, Game_ID = 1, User_Rating = 105, Behavior_Score = 2 },
@@ -373,7 +373,7 @@ namespace PlayerMatcher.Tests.Matchmaker
 
             var mockSetRatings = Mock.CreateMockSet(
                 new List<Rating> {
-                    new Rating(){ User_ID = 1, Game_ID = 1, User_Rating = 100, Behavior_Score = 0 },
+                    new Rating(){ User_ID = 1, Game_ID = 1, User_Rating = 103, Behavior_Score = 0 },
                     new Rating(){ User_ID = 2, Game_ID = 1, User_Rating = 108, Behavior_Score = 1 },
                     new Rating(){ User_ID = 3, Game_ID = 1, User_Rating = 112},
                     new Rating(){ User_ID = 4, Game_ID = 1, User_Rating = 105, Behavior_Score = 2 },
@@ -392,7 +392,6 @@ namespace PlayerMatcher.Tests.Matchmaker
             match.Should().AllBeOfType<User>().And.HaveCount(4);
             match.Select(x => x.User_ID).Should().Contain(1);
             match.Select(x => x.User_ID).Should().Contain(2);
-            match.Select(x => x.User_ID).Should().Contain(3);
         }
     }
 }

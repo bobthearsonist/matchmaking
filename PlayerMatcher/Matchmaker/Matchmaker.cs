@@ -22,7 +22,6 @@ namespace PlayerMatcher.Matchmaker
             int numTaken = 0;
             int minElo = 0;
             int maxElo = 10000;
-            int maxRuns = 1000;
             int runs = 0;
 
             if (numPlayers < 0)
@@ -45,8 +44,8 @@ namespace PlayerMatcher.Matchmaker
                                         select players).Count();
 
                 if (totalGamePlayers < numToTake) numToTake = totalGamePlayers;
-
-                while (playersInMatch.Count < numToTake && runs < maxRuns)
+                                
+                while (playersInMatch.Count < numToTake)
                 {
                     if (numTaken != 0) numForQuery = numToTake - numTaken;
                     runs++;
@@ -60,16 +59,18 @@ namespace PlayerMatcher.Matchmaker
                         {
                             Player = players,
                             EloRating = ranks.User_Rating.GetValueOrDefault()
-                        };                   
-
-                    foreach (var matchPlayer in GetPlayersQuery.Take(numForQuery))
+                        };
+                                        
+                    foreach (var matchPlayer in GetPlayersQuery.Take(totalGamePlayers))
                     {
-                        if (!playersInMatch.Contains(matchPlayer.Player))
+                        if (!playersInMatch.Contains(matchPlayer.Player) && numTaken < numToTake)
                         {
                             playersInMatch.Add(matchPlayer.Player);
                             listOfElos.Add(matchPlayer.EloRating);
                             numTaken++;
                         }
+                        if (runs == 1) break;
+                        if (numTaken == numToTake) break;
                     }
 
                     if (runs == 1)
@@ -85,7 +86,7 @@ namespace PlayerMatcher.Matchmaker
                     else
                     {
                         minElo = minElo - window;
-                        maxElo = maxElo - window;
+                        maxElo = maxElo + window;
                     }
                     if (minElo < 0) minElo = 0;                    
                 }
@@ -102,7 +103,6 @@ namespace PlayerMatcher.Matchmaker
             int numTaken = 0;
             int minElo = 0;
             int maxElo = 10000;
-            int maxRuns = 1000;
             int runs = 0;
 
             if (numPlayers < 0)
@@ -150,7 +150,7 @@ namespace PlayerMatcher.Matchmaker
                     }
                 }
 
-                while (playersInMatch.Count < numToTake && runs < maxRuns)
+                while (playersInMatch.Count < numToTake)
                 {
                     if (numTaken != 0) numForQuery = numToTake - numTaken;
                     runs++;
@@ -167,14 +167,15 @@ namespace PlayerMatcher.Matchmaker
                             BehaviorRating = ranks.Behavior_Score.GetValueOrDefault()
                         };
 
-                    foreach (var matchPlayer in GetPlayersQuery.Take(numForQuery))
+                    foreach (var matchPlayer in GetPlayersQuery.Take(totalGamePlayers))
                     {
-                        if (!playersInMatch.Contains(matchPlayer.Player))
+                        if (!playersInMatch.Contains(matchPlayer.Player) && numTaken < numToTake)
                         {
                             playersInMatch.Add(matchPlayer.Player);
                             listOfElos.Add(matchPlayer.EloRating);
                             numTaken++;
                         }
+                        if (numTaken == numToTake) break;
                     }
 
                     if (runs % 3 == 0)
@@ -185,7 +186,7 @@ namespace PlayerMatcher.Matchmaker
                     else
                     {
                         minElo = minElo - window;
-                        maxElo = maxElo - window;
+                        maxElo = maxElo + window;
                     }
                     if (minElo < 0) minElo = 0;
                 }
