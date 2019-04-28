@@ -1,33 +1,14 @@
-﻿using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System;
 using PlayerMatcher.Matchmaker;
-using PlayerMatcher;
-using Newtonsoft.Json;
 
 namespace PlayerMatcher.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
-        public class PlayerMatcherEntitiesExtended : PlayerMatcherEntities
-        {
-            public virtual object SetModified(object entity) //this method is not otherwise mockable
-            {
-                Entry(entity).State = EntityState.Modified;
-                return entity;
-            }
-        }
-
-        private PlayerMatcherEntitiesExtended db;
-
-        public UsersController() : this(new PlayerMatcherEntitiesExtended()) {}
-
-        public UsersController(PlayerMatcherEntities db)
-        {
-            this.@db = @db as PlayerMatcherEntitiesExtended;
-        }
+        public UsersController() : base() { }
+        public UsersController(PlayerMatcherEntities db) : base(db) { }
 
         // GET: Users
         public ActionResult Index()
@@ -38,104 +19,88 @@ namespace PlayerMatcher.Controllers
         
             var employeeLoggedIn = db.Users.Where(x => x.User_Name == user.User_Name && x.User_Password == user.User_Password).FirstOrDefault();
             return employeeLoggedIn;
-
         }
 
-        /*private EmployeeRepository _userRepository;
-            private ManagementSystemEntities db2 = new ManagementSystemEntities();
+        [AllowAnonymous]
+        public ActionResult SmartLogin(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            var employeeSession = (User)Session["user"];
 
-            public EmployeeController()
+            if (employeeSession != null)
             {
-                _userRepository = new EmployeeRepository();
+                return RedirectToAction("WelcomePage", "Employee", new { employee = Session["employee"] });
             }
-            */
-
-            [AllowAnonymous]
-            public ActionResult SmartLogin(string returnUrl)
+            else
             {
-                ViewBag.ReturnUrl = returnUrl;
-                var employeeSession = (User)Session["user"];
-
-                if (employeeSession != null)
-                {
                 return View();
-                    //return RedirectToAction("WelcomePage", "Employee", new { employee = Session["employee"] });
-                }
-                else
-                {
-                    return View();
-                }
             }
+        }
 
-            [HttpPost]
-            [AllowAnonymous]
-            [ValidateAntiForgeryToken]
-            public ActionResult SmartLogin(User user)
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult SmartLogin(User user)
+        {
+            var userLoggedIn = UserLoggedInSmart(user);
+            if (userLoggedIn != null)
             {
-                var userLoggedIn = UserLoggedInSmart(user);
-                if (userLoggedIn != null)
-                {
-                    ViewBag.message = "loggedin";
-                    ViewBag.triedOnce = "yes";
+                ViewBag.message = "loggedin";
+                ViewBag.triedOnce = "yes";
 
+                Session["user"] = userLoggedIn;
 
-                    Session["user"] = userLoggedIn;
-
-                    var userS = (User)Session["user"];
-                    //ViewBag.employeeTitle = employeeS.JobTitle;
-
-                    return RedirectToAction("Welcome", "Users", new { username = userLoggedIn?.User_Name });
-                }
-                else
-                {
-                    ViewBag.triedOnce = "yes";
-                    return View();
-                }
-
+                return RedirectToAction("Welcome", "Users", new { user = Session["user"] });
             }
-            public ActionResult login()
+            else
             {
-                var userSession = (User)Session["user"];
-
-                if (userSession != null)
-                {
-                    return RedirectToAction("Welcome", "Users", new { user = Session["user"] });
-                }
-                else
-                {
-                    return View();
-                }
+                ViewBag.triedOnce = "yes";
+                return View();
             }
-            public ActionResult logout()
+
+        }
+        public ActionResult login()
+        {
+            var userSession = (User)Session["user"];
+
+            if (userSession != null)
             {
-                Session["user"] = null;
-                return RedirectToAction("SmartLogin", "Users");
-                //return View(new { employee = Session["employee"] });
+                return RedirectToAction("Welcome", "Users", new { user = Session["user"] });
             }
-            [HttpPost]
-            public ActionResult login(User user)
+            else
             {
-                var userSM = UserLoggedInSmart(user);
-                if (userSM != null)
-                {
-                    ViewBag.message = "loggedin";
-                    ViewBag.triedOnce = "yes";
-
-
-                    Session["user"] = userSM;
-
-                    var userS = (User)Session["user"];
-                    ViewBag.employeeTitle = userS.Is_Online;
-
-                    return RedirectToAction("Welcome", "Users", new { username = userSM?.User_Name });
-                }
-                else
-                {
-                    ViewBag.triedOnce = "yes";
-                    return View();
-                }
+                return View();
             }
-            // GET: Users/Details/5
+        }
+        public ActionResult logout()
+        {
+            Session["user"] = null;
+            return RedirectToAction("SmartLogin", "Users");
+        }
+        [HttpPost]
+        public ActionResult login(User user)
+        {
+            var userSM = UserLoggedInSmart(user);
+            if (userSM != null)
+            {
+                ViewBag.message = "loggedin";
+                ViewBag.triedOnce = "yes";
+
+
+                Session["user"] = userSM;
+
+                var userS = (User)Session["user"];
+                ViewBag.employeeTitle = userS.Is_Online;
+
+                return RedirectToAction("Welcome", "Users", new { username = userSM?.User_Name });
+            }
+            else
+            {
+                ViewBag.triedOnce = "yes";
+                return View();
+            }
+        }
+        // GET: Users/Details/5
             public ActionResult Details(int? id)
         {
             if (id == null)
@@ -241,7 +206,6 @@ namespace PlayerMatcher.Controllers
             }
             MatchConstructor mm = new MatchConstructor();
             return View(mm.ConstructMatch(25, id.Value, false));
-            //return View(db.Users.OrderBy(o => Guid.NewGuid()).Take(id.Value).ToList());
         }
 
         protected override void Dispose(bool disposing)
