@@ -15,6 +15,7 @@
         <AssociationConnector Association="PlayerMatcherEntites.FK__Session_U__Game___4CA06362" />
         <AssociationConnector Association="PlayerMatcherEntites.FK__Rating__User_ID__300424B4" />
         <AssociationConnector Association="PlayerMatcherEntites.FK__Session_U__Users__4D94879B" />
+        <AssociationConnector Association="PlayerMatcherEntites.FK__Game_Sess__User___33D4B598" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

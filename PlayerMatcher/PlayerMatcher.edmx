@@ -21,6 +21,7 @@
           <Property Name="Session_Start" Type="datetime" />
           <Property Name="Session_End" Type="datetime" />
           <Property Name="Game_ID" Type="int" />
+          <Property Name="User_ID" Type="int" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -30,6 +31,7 @@
           <Property Name="User_Rating" Type="int" />
           <Property Name="User_ID" Type="int" />
           <Property Name="Game_ID" Type="int" />
+          <Property Name="Behavior_Score" Type="int" />
         </EntityType>
         <EntityType Name="Session_Users">
           <Key>
@@ -57,6 +59,18 @@
             </Principal>
             <Dependent Role="Game_Sessions">
               <PropertyRef Name="Game_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Game_Sess__User___33D4B598">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Game_Sessions" Type="Self.Game_Sessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Game_Sessions">
+              <PropertyRef Name="User_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -118,6 +132,10 @@
             <End Role="Game" EntitySet="Game" />
             <End Role="Game_Sessions" EntitySet="Game_Sessions" />
           </AssociationSet>
+          <AssociationSet Name="FK__Game_Sess__User___33D4B598" Association="Self.FK__Game_Sess__User___33D4B598">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Game_Sessions" EntitySet="Game_Sessions" />
+          </AssociationSet>
           <AssociationSet Name="FK__Rating__Game_ID__30F848ED" Association="Self.FK__Rating__Game_ID__30F848ED">
             <End Role="Game" EntitySet="Game" />
             <End Role="Rating" EntitySet="Rating" />
@@ -165,6 +183,10 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Session_Users" EntitySet="Session_Users" />
           </AssociationSet>
+          <AssociationSet Name="FK__Game_Sess__User___33D4B598" Association="PlayerMatcherEntites.FK__Game_Sess__User___33D4B598">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Game_Sessions" EntitySet="Game_Sessions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Game">
           <Key>
@@ -186,6 +208,8 @@
           <Property Name="Game_ID" Type="Int32" />
           <NavigationProperty Name="Game" Relationship="PlayerMatcherEntites.FK__Game_Sess__Game___34C8D9D1" FromRole="Game_Sessions" ToRole="Game" />
           <NavigationProperty Name="Session_Users" Relationship="PlayerMatcherEntites.FK__Session_U__Game___4CA06362" FromRole="Game_Sessions" ToRole="Session_Users" />
+          <Property Name="User_ID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="PlayerMatcherEntites.FK__Game_Sess__User___33D4B598" FromRole="Game_Sessions" ToRole="User" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -193,10 +217,11 @@
           </Key>
           <Property Name="User_Rating_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="User_Rating" Type="Int32" />
-          <Property Name="User_ID" Type="Int32" />
+          <Property Name="User_ID" Type="Int32" DefaultValue="0" />
           <Property Name="Game_ID" Type="Int32" />
           <NavigationProperty Name="Game" Relationship="PlayerMatcherEntites.FK__Rating__Game_ID__30F848ED" FromRole="Rating" ToRole="Game" />
           <NavigationProperty Name="User" Relationship="PlayerMatcherEntites.FK__Rating__User_ID__300424B4" FromRole="Rating" ToRole="User" />
+          <Property Name="Behavior_Score" Type="Int32" DefaultValue="0" />
         </EntityType>
         <EntityType Name="Session_Users">
           <Key>
@@ -218,6 +243,7 @@
           <Property Name="Is_Online" Type="Boolean" />
           <NavigationProperty Name="Ratings" Relationship="PlayerMatcherEntites.FK__Rating__User_ID__300424B4" FromRole="User" ToRole="Rating" />
           <NavigationProperty Name="Session_Users" Relationship="PlayerMatcherEntites.FK__Session_U__Users__4D94879B" FromRole="User" ToRole="Session_Users" />
+          <NavigationProperty Name="Game_Sessions" Relationship="PlayerMatcherEntites.FK__Game_Sess__User___33D4B598" FromRole="User" ToRole="Game_Sessions" />
         </EntityType>
         <Association Name="FK__Game_Sess__Game___34C8D9D1">
           <End Type="PlayerMatcherEntites.Game" Role="Game" Multiplicity="0..1" />
@@ -279,6 +305,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Game_Sess__User___33D4B598">
+          <End Type="PlayerMatcherEntites.User" Role="User" Multiplicity="0..1" />
+          <End Type="PlayerMatcherEntites.Game_Sessions" Role="Game_Sessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Game_Sessions">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -297,6 +335,7 @@
           <EntitySetMapping Name="Game_Sessions">
             <EntityTypeMapping TypeName="PlayerMatcherEntites.Game_Sessions">
               <MappingFragment StoreEntitySet="Game_Sessions">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
                 <ScalarProperty Name="Session_End" ColumnName="Session_End" />
                 <ScalarProperty Name="Session_Start" ColumnName="Session_Start" />
@@ -307,6 +346,7 @@
           <EntitySetMapping Name="Ratings">
             <EntityTypeMapping TypeName="PlayerMatcherEntites.Rating">
               <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="Behavior_Score" ColumnName="Behavior_Score" />
                 <ScalarProperty Name="Game_ID" ColumnName="Game_ID" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="User_Rating" ColumnName="User_Rating" />
