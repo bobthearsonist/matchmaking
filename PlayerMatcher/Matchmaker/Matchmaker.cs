@@ -5,10 +5,10 @@ using System.Linq;
 namespace PlayerMatcher.Matchmaker
 {
     public class MatchConstructor
-    {     
+    {
         private PlayerMatcherEntities db;
 
-        public MatchConstructor() : this(new PlayerMatcherEntities()) {}
+        public MatchConstructor() : this(new PlayerMatcherEntities()) { }
 
         public MatchConstructor(PlayerMatcherEntities db)
         {
@@ -22,19 +22,100 @@ namespace PlayerMatcher.Matchmaker
             int numTaken = 0;
             int minElo = 0;
             int maxElo = 10000;
+            int runs = 0;
 
-            if ( numPlayers < 0 )
+            if (numPlayers < 0)
             {
                 throw new ArgumentOutOfRangeException("numPlayers should be a positive integer");
             }
-            if ( gameID < 0 )
+            if (gameID < 0)
             {
                 throw new ArgumentException("invalid game id");
             }
-
-            try
             {
                 int numToTake = numPlayers;
+                int numForQuery = 1;
+                List<User> playersInMatch = new List<User>();
+                List<int> listOfElos = new List<int>();
+
+                var totalGamePlayers = (from players in db.Users
+                                        join ranks in db.Ratings on players.User_ID equals ranks.User_ID
+                                        where ranks.Game_ID == gameID
+                                        select players).Count();
+
+                if (totalGamePlayers < numToTake) numToTake = totalGamePlayers;
+                                
+                while (playersInMatch.Count < numToTake)
+                {
+                    if (numTaken != 0) numForQuery = numToTake - numTaken;
+                    runs++;
+
+                    var GetPlayersQuery =
+                        from players in db.Users
+                        join ranks in db.Ratings on players.User_ID equals ranks.User_ID
+                        where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
+                        orderby Guid.NewGuid()
+                        select new
+                        {
+                            Player = players,
+                            EloRating = ranks.User_Rating.GetValueOrDefault()
+                        };
+                                        
+                    foreach (var matchPlayer in GetPlayersQuery.Take(totalGamePlayers))
+                    {
+                        if (!playersInMatch.Contains(matchPlayer.Player) && numTaken < numToTake)
+                        {
+                            playersInMatch.Add(matchPlayer.Player);
+                            listOfElos.Add(matchPlayer.EloRating);
+                            numTaken++;
+                        }
+                        if (runs == 1) break;
+                        if (numTaken == numToTake) break;
+                    }
+
+                    if (runs == 1)
+                    {
+                        minElo = listOfElos[0] - window;
+                        maxElo = listOfElos[0] + window;
+                    }
+                    else if (runs % 3 == 0)
+                    {
+                        minElo = minElo - window * 2;
+                        maxElo = maxElo + window * 2;
+                    }
+                    else
+                    {
+                        minElo = minElo - window;
+                        maxElo = maxElo + window;
+                    }
+                    if (minElo < 0) minElo = 0;                    
+                }
+
+                return playersInMatch;
+
+            }
+
+
+        }
+
+        public List<User> ConstructMatch(int gameID, int numPlayers, bool UseBehaviorScore)
+        {
+            int numTaken = 0;
+            int minElo = 0;
+            int maxElo = 10000;
+            int runs = 0;
+
+            if (numPlayers < 0)
+            {
+                throw new ArgumentOutOfRangeException("numPlayers should be a positive integer");
+            }
+            if (gameID < 0)
+            {
+                throw new ArgumentException("invalid game id");
+            }
+            {
+                int numToTake = numPlayers;
+                int numForQuery = 1;
                 List<User> playersInMatch = new List<User>();
                 List<int> listOfElos = new List<int>();
 
@@ -45,48 +126,73 @@ namespace PlayerMatcher.Matchmaker
 
                 if (totalGamePlayers < numToTake) numToTake = totalGamePlayers;
 
+                var InitialQuery =
+                        from players in db.Users
+                        join ranks in db.Ratings on players.User_ID equals ranks.User_ID
+                        where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
+                        orderby Guid.NewGuid()
+                        select new
+                        {
+                            Player = players,
+                            EloRating = ranks.User_Rating.GetValueOrDefault(),
+                            BehaviorRating = ranks.Behavior_Score.GetValueOrDefault()
+                        };
+
+                foreach (var matchPlayer in InitialQuery.Take(numForQuery))
+                {
+                    if (!playersInMatch.Contains(matchPlayer.Player))
+                    {
+                        playersInMatch.Add(matchPlayer.Player);
+                        listOfElos.Add(matchPlayer.EloRating);
+                        numTaken++;
+                        minElo = listOfElos[0] - window;
+                        maxElo = listOfElos[0] + window;
+                    }
+                }
+
                 while (playersInMatch.Count < numToTake)
                 {
-                    if (numTaken != 0) numToTake = numToTake - numTaken;
+                    if (numTaken != 0) numForQuery = numToTake - numTaken;
+                    runs++;
 
                     var GetPlayersQuery =
                         from players in db.Users
                         join ranks in db.Ratings on players.User_ID equals ranks.User_ID
                         where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
-                        orderby ranks.User_Rating ascending
+                        orderby ranks.Behavior_Score ascending
                         select new
                         {
                             Player = players,
-                            EloRating = ranks.User_Rating.GetValueOrDefault()
+                            EloRating = ranks.User_Rating.GetValueOrDefault(),
+                            BehaviorRating = ranks.Behavior_Score.GetValueOrDefault()
                         };
 
-                    foreach (var matchPlayer in GetPlayersQuery.Take(numToTake))
+                    foreach (var matchPlayer in GetPlayersQuery.Take(totalGamePlayers))
                     {
-                        playersInMatch.Add(matchPlayer.Player);
-                        listOfElos.Add(matchPlayer.EloRating);
-                        numTaken++;
+                        if (!playersInMatch.Contains(matchPlayer.Player) && numTaken < numToTake)
+                        {
+                            playersInMatch.Add(matchPlayer.Player);
+                            listOfElos.Add(matchPlayer.EloRating);
+                            numTaken++;
+                        }
+                        if (numTaken == numToTake) break;
                     }
 
-                    if (numTaken == 1)
+                    if (runs % 3 == 0)
                     {
-                        minElo = listOfElos[0] - window;
-                        maxElo = listOfElos[0] + window;
+                        minElo = minElo - window * 2;
+                        maxElo = maxElo + window * 2;
                     }
                     else
                     {
                         minElo = minElo - window;
-                        maxElo = maxElo - window;
+                        maxElo = maxElo + window;
                     }
+                    if (minElo < 0) minElo = 0;
                 }
 
                 return playersInMatch;
             }
-            catch (Exception)
-            // TODO as a ROT you dont want to catch all expcetions, for example this would still catch a seg fault, or ENOT system exception lets change the type here to catch a specific exception type that you were encountering  or remvoe the try catch entirely and let the aprent handle the exception
-            {
-                Console.WriteLine("Caught exception. Suspect that Elo rating was missing");
-                throw;
-            }
         }
-    }    
+    }
 }
