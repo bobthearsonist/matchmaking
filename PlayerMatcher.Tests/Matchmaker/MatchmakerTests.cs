@@ -33,7 +33,7 @@ namespace PlayerMatcher.Tests.Matchmaker
             mockdb.Setup(db => db.Ratings).Returns(mockSetRatings.Object);
 
             // Act
-            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 2);
+            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 2, false);
 
             // Assert
             match.Should().AllBeOfType<User>().And.HaveCount(2);
@@ -66,7 +66,7 @@ namespace PlayerMatcher.Tests.Matchmaker
             mockdb.Setup(db => db.Ratings).Returns(mockSetRatings.Object);
 
             // Act
-            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 2);
+            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 2, false);
 
             // Assert
             match.Should().AllBeOfType<User>().And.HaveCount(2);
@@ -97,14 +97,13 @@ namespace PlayerMatcher.Tests.Matchmaker
             mockdb.Setup(db => db.Ratings).Returns(mockSetRatings.Object);
 
             // Act
-            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 3);
+            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 3, false);
 
             // Assert
             match.Should().AllBeOfType<User>().And.HaveCount(2);
         }
 
         [Test]
-        //[Ignore("this should work once we update the algorithm")]
         public void ConstructMatch_GroupsBySkill()
         {
             // Arrange
@@ -120,8 +119,8 @@ namespace PlayerMatcher.Tests.Matchmaker
 
             var mockSetRatings = Mock.CreateMockSet(
                 new List<Rating> {
-                    new Rating(){ User_ID = 1, Game_ID = 1, User_Rating = 12 },
-                    new Rating(){ User_ID = 2, Game_ID = 1, User_Rating = 10 },
+                    new Rating(){ User_ID = 1, Game_ID = 1, User_Rating = 42 },
+                    new Rating(){ User_ID = 2, Game_ID = 1, User_Rating = 45 },
                     new Rating(){ User_ID = 3, Game_ID = 1, User_Rating = 100 },
                     new Rating(){ User_ID = 4, Game_ID = 1, User_Rating = 3 },
                     new Rating(){ User_ID = 5, Game_ID = 1, User_Rating = 0 }
@@ -133,14 +132,12 @@ namespace PlayerMatcher.Tests.Matchmaker
             mockdb.Setup(db => db.Ratings).Returns(mockSetRatings.Object);
 
             // Act
-            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 3);
+            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 3, false);
 
             // Assert
             match.Should().AllBeOfType<User>().And.HaveCount(3);
             match.Select(x => x.User_ID).Should().Contain(1);
             match.Select(x => x.User_ID).Should().Contain(2);
-            //match.Select(x => x.User_ID).Should().Contain(4);
-            //match.Select(x => x.User_ID).Should().NotContain(3);
             match.Select(x => x.User_ID).Should().NotContain(5);
         }
 
@@ -160,8 +157,8 @@ namespace PlayerMatcher.Tests.Matchmaker
 
             var mockSetRatings = Mock.CreateMockSet(
                 new List<Rating> {
-                    new Rating(){ User_ID = 1, Game_ID = 1, User_Rating = 12 },
-                    new Rating(){ User_ID = 2, Game_ID = 1, User_Rating = 10 },
+                    new Rating(){ User_ID = 1, Game_ID = 1, User_Rating = 40 },
+                    new Rating(){ User_ID = 2, Game_ID = 1, User_Rating = 45 },
                     new Rating(){ User_ID = 3, Game_ID = 1, User_Rating = 100 },
                     new Rating(){ User_ID = 4, Game_ID = 1, User_Rating = 3 },
                     new Rating(){ User_ID = 5, Game_ID = 1, User_Rating = 0 }
@@ -173,13 +170,12 @@ namespace PlayerMatcher.Tests.Matchmaker
             mockdb.Setup(db => db.Ratings).Returns(mockSetRatings.Object);
 
             // Act
-            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 3);
+            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 3, false);
 
             // Assert
             match.Should().AllBeOfType<User>().And.HaveCount(3);
             match.Select(x => x.User_ID).Should().Contain(1);
             match.Select(x => x.User_ID).Should().Contain(2);
-            //match.Select(x => x.User_ID).Should().Contain(3);
         }
 
         [Test]
@@ -207,8 +203,8 @@ namespace PlayerMatcher.Tests.Matchmaker
             mockdb.Setup(db => db.Ratings).Returns(mockSetRatings.Object);
 
             // Act
-            var match1 = new MatchConstructor(mockdb.Object).ConstructMatch(1, 2);
-            var match2 = new MatchConstructor(mockdb.Object).ConstructMatch(1, 2);
+            var match1 = new MatchConstructor(mockdb.Object).ConstructMatch(1, 2, false);
+            var match2 = new MatchConstructor(mockdb.Object).ConstructMatch(1, 2, false);
 
             // Assert
             match1.Should().AllBeOfType<User>().And.HaveCount(2);
@@ -231,7 +227,7 @@ namespace PlayerMatcher.Tests.Matchmaker
             mockdb.Setup(db => db.Ratings).Returns(mockSetRatings.Object);
 
             // Act
-            var match = new MatchConstructor(mockdb.Object).ConstructMatch(0, 0);
+            var match = new MatchConstructor(mockdb.Object).ConstructMatch(0, 0, false);
 
             // Assert
             match.Should().AllBeOfType<User>().And.HaveCount(0);
@@ -249,7 +245,7 @@ namespace PlayerMatcher.Tests.Matchmaker
             mockdb.Setup(db => db.Ratings).Returns(mockSetRatings.Object);
 
             // Act
-            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 4);
+            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 4, false);
 
             // Assert
             match.Should().AllBeOfType<User>().And.HaveCount(0);
@@ -267,7 +263,7 @@ namespace PlayerMatcher.Tests.Matchmaker
             var matcher = new MatchConstructor(mockdb.Object);
 
             // Assert
-            Assert.Throws<ArgumentException>(() => matcher.ConstructMatch(-1,4));
+            Assert.Throws<ArgumentException>(() => matcher.ConstructMatch(-1,4, false));
         }
 
         [Test]
@@ -282,7 +278,7 @@ namespace PlayerMatcher.Tests.Matchmaker
             var matcher = new MatchConstructor(mockdb.Object);
 
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => matcher.ConstructMatch(1, -4));
+            Assert.Throws<ArgumentOutOfRangeException>(() => matcher.ConstructMatch(1, -4, false));
         }
 
         [Test]
@@ -310,7 +306,7 @@ namespace PlayerMatcher.Tests.Matchmaker
             mockdb.Setup(db => db.Ratings).Returns(mockSetRatings.Object);
 
             // Act
-            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 3);
+            var match = new MatchConstructor(mockdb.Object).ConstructMatch(1, 3, false);
 
             // Assert
             match.Should().AllBeOfType<User>().And.HaveCount(3);

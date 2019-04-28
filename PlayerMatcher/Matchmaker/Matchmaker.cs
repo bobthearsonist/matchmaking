@@ -6,6 +6,12 @@ namespace PlayerMatcher.Matchmaker
 {
     public class MatchConstructor
     {
+        private class PlayerData
+        {
+            public User user;
+            public int elo;
+        }
+
         private PlayerMatcherEntities db;
 
         public MatchConstructor() : this(new PlayerMatcherEntities()) { }
@@ -15,88 +21,7 @@ namespace PlayerMatcher.Matchmaker
             this.db = db;
         }
 
-        readonly int window = 12;
-
-        public List<User> ConstructMatch(int gameID, int numPlayers)
-        {
-            int numTaken = 0;
-            int minElo = 0;
-            int maxElo = 10000;
-            int runs = 0;
-
-            if (numPlayers < 0)
-            {
-                throw new ArgumentOutOfRangeException("numPlayers should be a positive integer");
-            }
-            if (gameID < 0)
-            {
-                throw new ArgumentException("invalid game id");
-            }
-            {
-                int numToTake = numPlayers;
-                int numForQuery = 1;
-                List<User> playersInMatch = new List<User>();
-                List<int> listOfElos = new List<int>();
-
-                var totalGamePlayers = (from players in db.Users
-                                        join ranks in db.Ratings on players.User_ID equals ranks.User_ID
-                                        where ranks.Game_ID == gameID
-                                        select players).Count();
-
-                if (totalGamePlayers < numToTake) numToTake = totalGamePlayers;
-                                
-                while (playersInMatch.Count < numToTake)
-                {
-                    if (numTaken != 0) numForQuery = numToTake - numTaken;
-                    runs++;
-
-                    var GetPlayersQuery =
-                        from players in db.Users
-                        join ranks in db.Ratings on players.User_ID equals ranks.User_ID
-                        where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
-                        orderby Guid.NewGuid()
-                        select new
-                        {
-                            Player = players,
-                            EloRating = ranks.User_Rating.GetValueOrDefault()
-                        };
-                                        
-                    foreach (var matchPlayer in GetPlayersQuery.Take(totalGamePlayers))
-                    {
-                        if (!playersInMatch.Contains(matchPlayer.Player) && numTaken < numToTake)
-                        {
-                            playersInMatch.Add(matchPlayer.Player);
-                            listOfElos.Add(matchPlayer.EloRating);
-                            numTaken++;
-                        }
-                        if (runs == 1) break;
-                        if (numTaken == numToTake) break;
-                    }
-
-                    if (runs == 1)
-                    {
-                        minElo = listOfElos[0] - window;
-                        maxElo = listOfElos[0] + window;
-                    }
-                    else if (runs % 3 == 0)
-                    {
-                        minElo = minElo - window * 2;
-                        maxElo = maxElo + window * 2;
-                    }
-                    else
-                    {
-                        minElo = minElo - window;
-                        maxElo = maxElo + window;
-                    }
-                    if (minElo < 0) minElo = 0;                    
-                }
-
-                return playersInMatch;
-
-            }
-
-
-        }
+        readonly int window = 12;        
 
         public List<User> ConstructMatch(int gameID, int numPlayers, bool UseBehaviorScore)
         {
@@ -126,73 +51,114 @@ namespace PlayerMatcher.Matchmaker
 
                 if (totalGamePlayers < numToTake) numToTake = totalGamePlayers;
 
-                var InitialQuery =
-                        from players in db.Users
-                        join ranks in db.Ratings on players.User_ID equals ranks.User_ID
-                        where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
-                        orderby Guid.NewGuid()
-                        select new
-                        {
-                            Player = players,
-                            EloRating = ranks.User_Rating.GetValueOrDefault(),
-                            BehaviorRating = ranks.Behavior_Score.GetValueOrDefault()
-                        };
-
-                foreach (var matchPlayer in InitialQuery.Take(numForQuery))
+                try
                 {
-                    if (!playersInMatch.Contains(matchPlayer.Player))
-                    {
-                        playersInMatch.Add(matchPlayer.Player);
-                        listOfElos.Add(matchPlayer.EloRating);
-                        numTaken++;
-                        minElo = listOfElos[0] - window;
-                        maxElo = listOfElos[0] + window;
-                    }
+                    PlayerData initialPlayer = new PlayerData();
+                    initialPlayer = GetInitialPlayer(gameID);
+                    playersInMatch.Add(initialPlayer.user);
+                    listOfElos.Add(initialPlayer.elo);
+                    numTaken++;
+                    minElo = listOfElos[0] - window;
+                    if (minElo < 0) minElo = 0;
+                    maxElo = listOfElos[0] + window;
+                }
+                catch (NoPlayersFoundException ex)
+                {
                 }
 
-                while (playersInMatch.Count < numToTake)
-                {
-                    if (numTaken != 0) numForQuery = numToTake - numTaken;
-                    runs++;
+                IEnumerable<PlayerData> playersSelectedByQuery;
 
+                if (UseBehaviorScore)
+                {
                     var GetPlayersQuery =
                         from players in db.Users
                         join ranks in db.Ratings on players.User_ID equals ranks.User_ID
                         where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
                         orderby ranks.Behavior_Score ascending
-                        select new
+                        select new PlayerData
                         {
-                            Player = players,
-                            EloRating = ranks.User_Rating.GetValueOrDefault(),
-                            BehaviorRating = ranks.Behavior_Score.GetValueOrDefault()
+                            user = players,
+                            elo = ranks.User_Rating.GetValueOrDefault()
                         };
+                    playersSelectedByQuery = GetPlayersQuery.Take(totalGamePlayers);
 
-                    foreach (var matchPlayer in GetPlayersQuery.Take(totalGamePlayers))
-                    {
-                        if (!playersInMatch.Contains(matchPlayer.Player) && numTaken < numToTake)
+                }
+                else
+                {
+                    var GetPlayersQuery =
+                        from players in db.Users
+                        join ranks in db.Ratings on players.User_ID equals ranks.User_ID
+                        where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
+                        orderby Guid.NewGuid()
+                        select new PlayerData
                         {
-                            playersInMatch.Add(matchPlayer.Player);
-                            listOfElos.Add(matchPlayer.EloRating);
+                            user = players,
+                            elo = ranks.User_Rating.GetValueOrDefault()
+                        };
+                        playersSelectedByQuery = GetPlayersQuery.Take(totalGamePlayers);
+                }
+
+                while (playersInMatch.Count < numToTake)
+                {
+                    foreach (var matchPlayer in playersSelectedByQuery)
+                    {
+                        if (!playersInMatch.Contains(matchPlayer.user) && numTaken < numToTake)
+                        {
+                            playersInMatch.Add(matchPlayer.user);
+                            listOfElos.Add(matchPlayer.elo);
                             numTaken++;
                         }
                         if (numTaken == numToTake) break;
-                    }
-
-                    if (runs % 3 == 0)
-                    {
-                        minElo = minElo - window * 2;
-                        maxElo = maxElo + window * 2;
-                    }
-                    else
-                    {
-                        minElo = minElo - window;
-                        maxElo = maxElo + window;
-                    }
+                    }                    
+                    minElo = minElo - window;
+                    maxElo = maxElo + window;
+                    
                     if (minElo < 0) minElo = 0;
                 }
 
                 return playersInMatch;
             }
         }
+
+        private PlayerData GetInitialPlayer(int gameID)
+        {
+            int minElo = 0;
+            int maxElo = 10000;
+            bool playerActuallyFound = false;
+            PlayerData playerToBeReturned = new PlayerData();
+
+            IEnumerable<PlayerData> playerSelectedByQuery;
+            var InitialQuery =
+                        from players in db.Users
+                        join ranks in db.Ratings on players.User_ID equals ranks.User_ID
+                        where ranks.Game_ID == gameID && ranks.User_Rating > minElo && ranks.User_Rating < maxElo
+                        orderby Guid.NewGuid()
+                        select new PlayerData
+                        {
+                            user = players,
+                            elo = ranks.User_Rating.GetValueOrDefault()
+                        };
+            playerSelectedByQuery = InitialQuery.Take(1);
+
+            foreach (var matchPlayer in playerSelectedByQuery)
+            {
+                playerToBeReturned = matchPlayer;
+                playerActuallyFound = true;
+            }
+            if (playerActuallyFound)
+            {
+                return playerToBeReturned;
+            }
+            else throw new NoPlayersFoundException("No players found for game");
+        }
+    }
+    public class NoPlayersFoundException : System.Exception
+    {
+        public NoPlayersFoundException() : base() { }
+        public NoPlayersFoundException(string message) : base(message) { }
+        public NoPlayersFoundException(string message, System.Exception inner) : base(message, inner) { }
+
+        protected NoPlayersFoundException(System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 }
