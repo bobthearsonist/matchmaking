@@ -10,4 +10,4 @@ ExpectedResultA = 1 / (1 + 10^((RatingB - RatingA)/400))
 
 This calcuation results in a 55% / 45% split in odds at a 25 point elo difference.
 
-INSERT BEHAVIOR DESCRIPTION HERE
+Once players in an Elo band are found, the matchmaker can be instructed to select them randomly, or to sort them in order of behavior score. Behavior score is stored as an integer value where 0 is best possible behavior, and negative behavior increases it. If the matchmaker is instructed to factor in behavior, best behaved players will be selected first in an elo band for a match. 
