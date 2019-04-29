@@ -14,6 +14,8 @@ namespace PlayerMatcher.Tests
             mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(userData.AsQueryable().Expression);
             mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(userData.AsQueryable().ElementType);
             mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(userData.GetEnumerator());
+            mockSet.Setup(m => m.Include(It.IsAny<string>())).Returns(mockSet.Object);
+
             return mockSet;
         }
     }
