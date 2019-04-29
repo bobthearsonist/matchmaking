@@ -58,12 +58,12 @@ The algorithm was added last, while it is the core of the deliverable product it
 
 ## Links
 
-Hosted application http://ksuplayermatcher.azurewebsites.net/Users
+[Hosted application](http://ksuplayermatcher.azurewebsites.net/Users)
 
-Trello board for product backlog: https://trello.com/b/SxTVJTQK/matchmaking-product-backlog
-Slack channel invite link: https://join.slack.com/t/emergingprocesses/shared_invite/enQtNTQ0NjkyNjIyNDU0LTcyMzZkZmViZWMzYmQyYThiMmVmZmZiOTI5YzY0YmEzYzdiOTJiNzk2Mzg3ZGI5ZTMyOTFjMTVlMTM1ZWU0NWM
+[Trello board for product backlog](https://trello.com/b/SxTVJTQK/matchmaking-product-backlog)
+[Slack channel invite link](https://join.slack.com/t/emergingprocesses/shared_invite/enQtNTQ0NjkyNjIyNDU0LTcyMzZkZmViZWMzYmQyYThiMmVmZmZiOTI5YzY0YmEzYzdiOTJiNzk2Mzg3ZGI5ZTMyOTFjMTVlMTM1ZWU0NWM)
 
-[match algorithm documentation](matchmaking/PlayerMatcher/Matchmaker/MatchmakerDocumentation.md)
+[match algorithm documentation](PlayerMatcher/Matchmaker/MatchmakerDocumentation.md)
 
 [final presentation](https://docs.google.com/presentation/d/1eBvsf4SeJzLRH6KwdEDspDUQuYFX4R_Xm-tedLnyjKU/edit?usp=sharing)
 
