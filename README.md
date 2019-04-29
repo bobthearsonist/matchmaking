@@ -63,4 +63,8 @@ Hosted application http://ksuplayermatcher.azurewebsites.net/Users
 Trello board for product backlog: https://trello.com/b/SxTVJTQK/matchmaking-product-backlog
 Slack channel invite link: https://join.slack.com/t/emergingprocesses/shared_invite/enQtNTQ0NjkyNjIyNDU0LTcyMzZkZmViZWMzYmQyYThiMmVmZmZiOTI5YzY0YmEzYzdiOTJiNzk2Mzg3ZGI5ZTMyOTFjMTVlMTM1ZWU0NWM
 
+[match algorithm documentation](matchmaking/PlayerMatcher/Matchmaker/MatchmakerDocumentation.md)
+
+[final presentation](https://docs.google.com/presentation/d/1eBvsf4SeJzLRH6KwdEDspDUQuYFX4R_Xm-tedLnyjKU/edit?usp=sharing)
+
 [Burndown charts and other sprint information are in the documentation folder and are ordered by sprint](documentation/)
