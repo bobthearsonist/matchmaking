@@ -14,10 +14,17 @@ namespace PlayerMatcher
     
     public partial class Rating
     {
+        public Rating()
+        {
+            this.User_ID = 0;
+            this.Behavior_Score = 0;
+        }
+    
         public int User_Rating_ID { get; set; }
         public Nullable<int> User_Rating { get; set; }
         public Nullable<int> User_ID { get; set; }
         public Nullable<int> Game_ID { get; set; }
+        public Nullable<int> Behavior_Score { get; set; }
     
         public virtual Game Game { get; set; }
         public virtual User User { get; set; }
