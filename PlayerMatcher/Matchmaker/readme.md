@@ -9,3 +9,5 @@ where the expected result is the odds of winning, plus half the odds of drawing:
 ExpectedResultA = 1 / (1 + 10^((RatingB - RatingA)/400))
 
 This calcuation results in a 55% / 45% split in odds at a 25 point elo difference.
+
+INSERT BEHAVIOR DESCRIPTION HERE
