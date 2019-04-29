@@ -10,7 +10,9 @@ similar capacity picked for this sprint based on previous throughput and assumin
 
 ## Review
 
-
+Team went over the previous sprints, discussed changes over time in goals and feature realignment
+reviewed overall application
+went over presentation plan
 
 ![Burndown](burndown.png)
 
@@ -63,3 +65,11 @@ Sourav: Worked on presentation. Will continue to work on it this weekend. Will g
 https://docs.google.com/presentation/d/1eBvsf4SeJzLRH6KwdEDspDUQuYFX4R_Xm-tedLnyjKU/edit#slide=id.g58d95a8361_0_455
 
 Martin: Fork merged to master, all PRs closed and merged, CI setup and badge added to repository. Will work on adding more tests and possibly an alternate CD for the main repository.
+
+### 20190429
+Martin, Chris, Sourav, Kristin
+
+Chris: matchmaking algorithms merged in
+Sourav: initial presentation completed
+Martin: added to presentation and all tests finished
+Kristin: incorporated matchmaking algorithm into UI

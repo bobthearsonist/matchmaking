@@ -92,28 +92,3 @@ Martin: put some documentation into the folder that contains the algorithm class
 Discussed design of Matcher class
 
 Merged open PR
-
-### 20190426
-Martin, Chris, Sourav, Kristin
-
-Chris: Worked on PRs. Will be working on the algorithm.
-
-Kristin: Working on UI. Will work on Login to fix issues with signup. Incorporate algorithm. 
-Martin recommended doing a video demo in case there were issues during the live demo, Kristin said she didn’t want to do that.
-
-Sourav: Worked on presentation. 
-
-Martin: Fork merged to master, all PRs closed and merged, CI setup and badge added to repository. Will work on adding more tests and possibly an alternate CD for the main repository.
-
-### 20190429
-Martin, Chris, Sourav, Kristin
-
-Chris: matchmaking algorithms merged in
-Sourav: initial presentation completed
-Martin: added to presentation and all tests finished
-Kristin: incorporated matchmaking algorithm into UI
-
-Sprint/product review
-Team went over the previous sprints, discussed changes over time in goals and feature realignment
-reviewed overall application
-went over presentation plan
