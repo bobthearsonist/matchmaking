@@ -205,7 +205,7 @@ namespace PlayerMatcher.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             MatchConstructor mm = new MatchConstructor();
-            return View(mm.ConstructMatch(25, id.Value));
+            return View(mm.ConstructMatch(25, id.Value, false));
         }
 
         protected override void Dispose(bool disposing)
